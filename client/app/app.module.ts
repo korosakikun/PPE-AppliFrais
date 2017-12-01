@@ -14,6 +14,8 @@ import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
 
+import { VisiteurModule } from './visiteur/visiteur.module'
+
 @NgModule({
     imports: [
         BrowserModule,
