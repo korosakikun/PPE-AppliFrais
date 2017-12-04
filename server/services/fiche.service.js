@@ -1,4 +1,4 @@
-﻿var config = require('config.json');
+var config = require('config.json');
 var _ = require('lodash');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
@@ -9,7 +9,6 @@ db.bind('users');
 
 var service = {};
 
-service.authenticate = authenticate;
 service.getAll = getAll;
 service.getById = getById;
 service.create = create;
@@ -17,31 +16,6 @@ service.update = update;
 service.delete = _delete;
 
 module.exports = service;
-
-function authenticate(username, password) {
-    var deferred = Q.defer();
-
-    db.users.findOne({ username: username }, function (err, user) {
-        if (err) deferred.reject(err.name + ': ' + err.message);
-
-        if (user && bcrypt.compareSync(password, user.hash)) {
-            // authentication successful
-            deferred.resolve({
-                _id: user._id,
-                username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                token: jwt.sign({ sub: user._id }, config.secret),
-								ficheDeFrais: user.ficheDeFrais
-            });
-        } else {
-            // authentication failed
-            deferred.resolve();
-        }
-    });
-
-    return deferred.promise;
-}
 
 function getAll() {
     var deferred = Q.defer();
@@ -80,37 +54,15 @@ function getById(_id) {
 
 function create(userParam) {
     var deferred = Q.defer();
+		var mois = userParam.mois;
+		db.users.update(
+				{ _id: mongo.helper.toObjectID(userParam.user._id) },
+				{ $push: { ficheDeFrais: { mois, fraisForfait: [] } } },
+				function (err, doc) {
+						if (err) deferred.reject(err.name + ': ' + err.message);
 
-    // validation
-    db.users.findOne(
-        { username: userParam.username },
-        function (err, user) {
-            if (err) deferred.reject(err.name + ': ' + err.message);
-
-            if (user) {
-                // username already exists
-                deferred.reject('Username "' + userParam.username + '" is already taken');
-            } else {
-                createUser();
-            }
-        });
-
-    function createUser() {
-        // set user object to userParam without the cleartext password
-        var user = _.omit(userParam, 'password');
-
-        // add hashed password to user object
-        user.hash = bcrypt.hashSync(userParam.password, 10);
-
-				user.ficheDeFrais = [];
-        db.users.insert(
-            user,
-            function (err, doc) {
-                if (err) deferred.reject(err.name + ': ' + err.message);
-
-                deferred.resolve();
-            });
-    }
+						deferred.resolve();
+				});
 
     return deferred.promise;
 }

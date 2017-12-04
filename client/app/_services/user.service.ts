@@ -26,4 +26,8 @@ export class UserService {
     delete(_id: string) {
         return this.http.delete('/users/' + _id);
     }
+
+		getCurrent() {
+			return this.http.get('/users/current').map((response: Response) => response.json());
+		}
 }
