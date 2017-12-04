@@ -32,7 +32,7 @@ function authenticate(username, password) {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 token: jwt.sign({ sub: user._id }, config.secret),
-								ficheDeFrais: user.ficheDeFrais
+								fichesDeFrais: user.fichesDeFrais
             });
         } else {
             // authentication failed
@@ -102,7 +102,8 @@ function create(userParam) {
         // add hashed password to user object
         user.hash = bcrypt.hashSync(userParam.password, 10);
 
-				user.ficheDeFrais = [];
+				user.fichesDeFrais = [];
+				console.log(user);
         db.users.insert(
             user,
             function (err, doc) {

@@ -57,7 +57,7 @@ function create(userParam) {
 		var mois = userParam.mois;
 		db.users.update(
 				{ _id: mongo.helper.toObjectID(userParam.user._id) },
-				{ $push: { ficheDeFrais: { mois, fraisForfait: [] } } },
+				{ $push: { fichesDeFrais: { mois, fraisForfait: [{typeFrais: {nom : "Restaurant", valeur: 40}, nombre: 2 }] } } },
 				function (err, doc) {
 						if (err) deferred.reject(err.name + ': ' + err.message);
 
