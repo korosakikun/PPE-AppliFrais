@@ -1,22 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
-
-import { User, ficheDeFrais } from '../_models/index';
+import 'rxjs/add/operator/map'
+import { User, ficheDeFrais, fraisForfait } from '../_models/index';
 
 @Injectable()
 export class ficheService {
     constructor(private http: Http) { }
 
-    getAll() {
-        return this.http.get('/ficheDeFrais').map((response: Response) => response.json());
-    }
-
-    getById(_id: string) {
-        return this.http.get('/ficheDeFrais/' + _id).map((response: Response) => response.json());
-    }
-
     create(ficheDeFrais: any) {
-        return this.http.post('/ficheDeFrais/create', ficheDeFrais);
+        return this.http.post('/ficheDeFrais/create', ficheDeFrais)
+          .map((response: Response) => {
+            console.log(response.json());
+            let user = response.json();
+            return user;
+          });
     }
 
     update(ficheDeFrais: ficheDeFrais) {
@@ -25,5 +22,10 @@ export class ficheService {
 
     delete(_id: string) {
         return this.http.delete('/ficheDeFrais/' + _id);
+    }
+
+    ajoutFrais(_id: string, date: string, fraisForfait: fraisForfait) {
+      var param = { _id, date, fraisForfait };
+      return this.http.put('/ficheDeFrais/ajoutFrais', param);
     }
 }

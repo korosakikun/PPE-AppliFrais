@@ -3,9 +3,14 @@
     <p>You're logged in with the MEAN Stack & Angular 2!!</p>
 		<p><a [routerLink]="['/login']">Logout</a></p>
 		<button type="button" class="btn" name="button" (click)="ficheCreate()"> crée une fiche pour ce mois</button>
+    <p>
+      <a [routerLink]="['/visiteur/fraisForfait']">
+        Crée frais forfait pour ce mois
+      </a>
+    </p>
 		<div class="" *ngFor="let fiche of ficheDeFrais">
 			<h2>
-				{{ fiche.mois }}
+				{{ fiche.date }}
 			</h2>
 			<table class="table">
 				<thead>
@@ -30,7 +35,7 @@
 							{{ frai.nombre }}
 						</td>
 						<td>
-							{{ frai.typeFrais.valeur * frai.nombre }}
+							{{ frai.typeFrais.montant * frai.nombre }}
 						</td>
 					</tr>
 				</tbody>

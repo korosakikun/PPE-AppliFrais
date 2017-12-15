@@ -8,7 +8,7 @@ import { AlertComponent } from '../_directives/index';
 import { AuthGuard } from '../_guards/index';
 import { AlertService, AuthenticationService, UserService } from '../_services/index';
 import { VisiteurComponent } from './visiteur.component';
-import { TestComponent } from './test.component';
+import { fraisForfaitComponent } from './fraisForfait.component';
 
 @NgModule({
     imports: [
@@ -17,13 +17,13 @@ import { TestComponent } from './test.component';
         RouterModule.forChild(
           [
             { path: '', component: VisiteurComponent},
-            { path: 'ficheDeFrais', component: TestComponent}
+            { path: 'fraisForfait', component: fraisForfaitComponent}
           ]
         )
     ],
     declarations: [
       VisiteurComponent,
-      TestComponent
+      fraisForfaitComponent
     ],
 })
 

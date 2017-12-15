@@ -5,15 +5,26 @@ var ficheService = require('services/fiche.service');
 
 // routes
 router.post('/create', create);
-router.get('/', getAll);
-router.get('/current', getCurrent);
-router.put('/:_id', update);
 router.delete('/:_id', _delete);
+router.put('/ajoutFrais', ajoutFrais);
+router.put('/:_id', update);
 
 module.exports = router;
 
-function create(req, res, user) {
+function create(req, res) {
+  console.log('create')
     ficheService.create(req.body)
+        .then(function (user) {
+          console.log(user);
+            res.send(user);
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+}
+
+function ajoutFrais(req, res) {
+    ficheService.ajoutFrais(req.body)
         .then(function () {
             res.sendStatus(200);
         })
