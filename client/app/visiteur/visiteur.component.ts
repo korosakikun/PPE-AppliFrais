@@ -17,7 +17,8 @@ export class VisiteurComponent {
     private alertService: AlertService,
     private userService: UserService
   ) {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    this.currentUser = this.userService.user;
     this.ficheDeFrais = this.currentUser.fichesDeFrais;
   }
 
@@ -26,8 +27,9 @@ export class VisiteurComponent {
     this.ficheService.create({ date: ficheDeFrais, user: this.currentUser })
       .subscribe(
       data => {
-        this.ficheDeFrais = data
+        this.userService.user.fichesDeFrais.push({ficheDeFrais, fraisForfait: []});
         this.alertService.success('Fiche crée avec succès', true);
+        console.log(this.userService.user);
       },
       error => {
         this.alertService.error(error);

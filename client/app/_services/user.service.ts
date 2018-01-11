@@ -5,6 +5,7 @@ import { User } from '../_models/index';
 
 @Injectable()
 export class UserService {
+    user: any;
     constructor(private http: Http) { }
 
     getAll() {
@@ -27,7 +28,7 @@ export class UserService {
         return this.http.delete('/users/' + _id);
     }
 
-		getCurrent() {
-			return this.http.get('/users/current').map((response: Response) => response.json());
-		}
+    getCurrent() {
+    	return this.http.get('/users/current').map((response: Response) => response.json());
+    }
 }

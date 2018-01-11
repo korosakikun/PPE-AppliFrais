@@ -36,22 +36,19 @@ function createFiche(userParam) {
       if (ficheDeFrais) {
         deferred.reject(`Fiche de frais pour ce mois déja crée`);
       } else {
-        db.users.findAndModify({
+        db.users.update({
             _id: mongo.helper.toObjectID(userParam.user._id)
-          }, [], {
+          }, {
             $push: {
               fichesDeFrais: {
                 date,
                 fraisForfait: []
               }
             }
-          }, {
-            new: true,
-            upsert: true
           },
-          function(err, user) {
+          function(err) {
             if (err) deferred.reject(err.name + ': ' + err.message);
-            deferred.resolve(user.value.fichesDeFrais);
+            deferred.resolve();
           })
       }
     });

@@ -7,9 +7,11 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
+import { UserService } from '../_services/user.service';
+
 @Injectable()
 export class CustomHttp extends Http {
-    constructor(backend: ConnectionBackend, defaultOptions: RequestOptions) {
+    constructor(backend: ConnectionBackend, defaultOptions: RequestOptions, private user: UserService) {
         super(backend, defaultOptions);
     }
 
@@ -37,9 +39,9 @@ export class CustomHttp extends Http {
         options.headers = options.headers || new Headers();
 
         // add authorization header with jwt token
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser && currentUser.token) {
-            options.headers.append('Authorization', 'Bearer ' + currentUser.token);
+        let currentUser = this.user;
+        if (currentUser && currentUser.user && currentUser.user.token) {
+            options.headers.append('Authorization', 'Bearer ' + currentUser.user.token);
         }
 
         return options;

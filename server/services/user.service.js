@@ -97,7 +97,7 @@ function create(userParam) {
 
       if (user) {
         // username already exists
-        deferred.reject(`Nom d'utilisateur ${req.body.username} déja existants`);
+        deferred.reject(`Nom d'utilisateur ${userParam.username} déja existants`);
       } else {
         createUser();
       }

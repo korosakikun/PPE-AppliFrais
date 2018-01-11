@@ -8,12 +8,7 @@ export class ficheService {
     constructor(private http: Http) { }
 
     create(ficheDeFrais: any) {
-        return this.http.post('/ficheDeFrais/create', ficheDeFrais)
-          .map((response: Response) => {
-            console.log(response.json());
-            let user = response.json();
-            return user;
-          });
+        return this.http.put('/ficheDeFrais/create', ficheDeFrais);
     }
 
     update(ficheDeFrais: ficheDeFrais) {

@@ -31,7 +31,7 @@ export class fraisForfaitComponent {
 		private alertService: AlertService,
 		private userService: UserService
 	){
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.currentUser = this.userService.user;
 		this.ficheDeFrais = this.currentUser.fichesDeFrais;
     console.log(this.currentUser);
     this.types = [
@@ -59,6 +59,8 @@ export class fraisForfaitComponent {
 			this.ficheService.ajoutFrais(this.currentUser._id, ficheDeFrais, this.model)
 					.subscribe(
 							data => {
+                console.log(this.userService.user);
+                this.userService.user.fichesDeFrais[this.userService.user.fichesDeFrais.lenght-1].push(this.model);
 									this.alertService.success('frais crée avec succès', true);
 							},
 							error => {
