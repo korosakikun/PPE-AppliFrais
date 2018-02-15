@@ -32,6 +32,7 @@ export class VisiteurComponent {
         console.log(this.userService.user);
       },
       error => {
+        console.log(error);
         this.alertService.error(error);
       }
       )

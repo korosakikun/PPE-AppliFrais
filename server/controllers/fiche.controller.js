@@ -16,7 +16,7 @@ function create(req, res) {
     ficheService.create(req.body)
         .then(function (user) {
           console.log(user);
-            res.sendStats(200);
+            res.sendStatus(200);
         })
         .catch(function (err) {
             res.status(400).send(err);

@@ -21,7 +21,7 @@ module.exports = service;
 function createFiche(userParam) {
   var deferred = Q.defer();
   var date = userParam.date;
-  console.log(date);
+  console.log("mois ",date);
   db.users.findOne({
       _id: mongo.helper.toObjectID(userParam.user._id),
       fichesDeFrais: {
@@ -31,8 +31,11 @@ function createFiche(userParam) {
       }
     },
     function(err, ficheDeFrais) {
-      if (err) deferred.reject(err.name + ": " + err.message);
-      console.log(ficheDeFrais)
+      if (err) {
+        console.log("first error ",err);
+        deferred.reject(err.name + ": " + err.message);
+      }
+      console.log("FicheFrais ",ficheDeFrais)
       if (ficheDeFrais) {
         deferred.reject(`Fiche de frais pour ce mois déja crée`);
       } else {
@@ -47,7 +50,10 @@ function createFiche(userParam) {
             }
           },
           function(err) {
-            if (err) deferred.reject(err.name + ': ' + err.message);
+            if (err) {
+              console.log('second Error ',err);
+              deferred.reject(err.name + ': ' + err.message);
+            }
             deferred.resolve();
           })
       }
