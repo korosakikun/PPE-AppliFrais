@@ -5,9 +5,9 @@ var ficheService = require('services/fiche.service');
 
 // routes
 router.post('/create', create);
-router.delete('/:_id', _delete);
+// router.delete('/:_id', _delete);
 router.put('/ajoutFrais', ajoutFrais);
-router.put('/:_id', update);
+// router.put('/:_id', update);
 
 module.exports = router;
 
@@ -34,7 +34,7 @@ function ajoutFrais(req, res) {
 }
 
 function getAll(req, res) {
-    userService.getAll()
+    ficheService.getAll()
         .then(function (users) {
             res.send(users);
         })
@@ -44,7 +44,7 @@ function getAll(req, res) {
 }
 
 function getCurrent(req, res) {
-    userService.getById(req.user.sub)
+    ficheService.getById(req.user.sub)
         .then(function (user) {
             if (user) {
                 res.send(user);
@@ -58,7 +58,7 @@ function getCurrent(req, res) {
 }
 
 function update(req, res) {
-    userService.update(req.params._id, req.body)
+    ficheService.update(req.params._id, req.body)
         .then(function () {
             res.sendStatus(200);
         })
@@ -68,7 +68,7 @@ function update(req, res) {
 }
 
 function _delete(req, res) {
-    userService.delete(req.params._id)
+    ficheService.delete(req.params._id)
         .then(function () {
             res.sendStatus(200);
         })

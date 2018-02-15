@@ -60,8 +60,8 @@ export class fraisForfaitComponent {
 					.subscribe(
 							data => {
                 console.log(this.userService.user);
-                this.userService.user.fichesDeFrais[this.userService.user.fichesDeFrais.lenght-1].push(this.model);
-									this.alertService.success('frais crée avec succès', true);
+                this.userService.user.fichesDeFrais[this.userService.user.fichesDeFrais.length-1].fraisForfait.push(this.model);
+								this.alertService.success('frais crée avec succès', true);
 							},
 							error => {
 									this.alertService.error(error);

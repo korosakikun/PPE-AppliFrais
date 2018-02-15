@@ -13,6 +13,11 @@ export class AuthenticationService {
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let user = response.json();
+                if (user && user.token) {
+                  this.userService.user = user;
+                  // store user details and jwt token in local storage to keep user logged in between page refreshes
+                  localStorage.setItem('currentUser', JSON.stringify(user));
+                }
                 this.userService.user = user;
                 return user;
             });
@@ -20,7 +25,7 @@ export class AuthenticationService {
 
     logout() {
         // remove user from local storage to log user out
-        // localStorage.removeItem('currentUser');
+        localStorage.removeItem('currentUser');
         this.userService.user = {};
     }
 }
