@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 
 import { customHttpProvider } from './_helpers/index';
-import { AlertComponent } from './_directives/index';
+import { AlertComponent, MenuComponent } from './_directives/index';
 import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService, UserService, ficheService } from './_services/index';
 import { HomeComponent } from './home/index';
@@ -26,6 +26,7 @@ import { VisiteurModule } from './visiteur/visiteur.module'
     declarations: [
         AppComponent,
         AlertComponent,
+        MenuComponent,
         HomeComponent,
         LoginComponent,
         RegisterComponent

@@ -20,6 +20,7 @@ export class VisiteurComponent {
 
     this.currentUser = this.userService.user;
     this.ficheDeFrais = this.currentUser.fichesDeFrais;
+    this.ficheCreate();
   }
 
   ficheCreate() {
