@@ -5,9 +5,9 @@ var ficheService = require('services/fiche.service');
 
 // routes
 router.post('/create', create);
-// router.delete('/:_id', _delete);
 router.put('/ajoutFrais', ajoutFrais);
-// router.put('/:_id', update);
+router.put('/:_id', update);
+router.delete('/:_id', _delete);
 
 module.exports = router;
 
