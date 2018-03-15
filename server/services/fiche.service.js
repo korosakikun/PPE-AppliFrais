@@ -3,66 +3,89 @@ var _ = require('lodash');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var Q = require('q');
+var moment = require('moment');
 var mongoose = require('mongoose');
-mongoose.connect(config.connectionString, function(err){
-	if (err) { throw err; }
+mongoose.connect(config.connectionString, function(err) {
+  if (err) {
+    throw err;
+  }
 });
 
-import { ficheDeFraisSchema } from './schema/ficheDeFrais.js';
+var ficheDeFraisSchema = require('../schema/ficheDeFrais.js');
 
 var ficheDeFraisModel = mongoose.model('ficheDeFrais', ficheDeFraisSchema);
 
 var service = {};
 
 service.create = createFiche;
-service.update = update;
-service.delete = _delete;
+service.getAll = getAll;
 service.ajoutFrais = ajoutFrais;
 
 module.exports = service;
 
 function createFiche(userParam) {
   var deferred = Q.defer();
-	var date = moment();
-	ficheDeFraisModel.findOne({
-		user: userParam._id,
-		mois: {"$gte": moment().startOf('month').toDate(), "$lt": moment().endOf('month').toDate()}
-	}, function(err, fiche){
-		if (err) {
+  var date = moment();
+  ficheDeFraisModel.findOne({
+    user: userParam._id,
+    mois: {
+      "$gte": moment().startOf('month').toDate(),
+      "$lt": moment().endOf('month').toDate()
+    }
+  }, function(err, fiche) {
+    if (err) {
       deferred.reject(err.name + ": " + err.message);
-		}
-		if (fiche) {
-			deferred.resolve();
-		} else {
-			var fiche = new ficheDeFraisModel({
-				user: userParam._id,
-				etat: "Creer",
-				fraisForfait: []
-			});
-			fiche.save(function(err) {
-				if (err) {
+    }
+    if (fiche) {
+      deferred.resolve();
+    } else {
+      var fiche = new ficheDeFraisModel({
+        user: userParam._id,
+        etat: "Creer",
+        fraisForfait: []
+      });
+      fiche.save(function(err) {
+        if (err) {
           deferred.reject(err.name + ': ' + err.message);
-				}
-			});
-		}
-	})
+        }
+      });
+    }
+  })
+  return deferred.promise;
+}
+
+function getAll(_id) {
+  var deferred = Q.defer();
+  console.log(_id)
+
+  ficheDeFraisModel.find({user: _id}, function(err, ficheDeFrais) {
+    if (err) {
+      deferred.reject(err.name + ': ' + err.message);
+    }
+
+    deferred.resolve(ficheDeFrais);
+  });
+
   return deferred.promise;
 }
 
 function ajoutFrais(userParam) {
   var deferred = Q.defer();
   ficheDeFraisModel.update({
-			user: userParam._id,
-			mois: {"$gte": moment().startOf('month').toDate(), "$lt": moment().endOf('month').toDate()}
+      user: userParam._id,
+      mois: {
+        "$gte": moment().startOf('month').toDate(),
+        "$lt": moment().endOf('month').toDate()
+      }
     }, {
       $push: {
         'fraisForfait': userParam.fraisForfait
       }
     },
     function(err) {
-      if (err){
-				deferred.reject(err.name + ': ' + err.message)
-			};
+      if (err) {
+        deferred.reject(err.name + ': ' + err.message)
+      };
       deferred.resolve();
     });
   return deferred.promise;

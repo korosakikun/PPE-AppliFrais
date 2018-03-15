@@ -15,9 +15,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul *ngIf="currentUser?.firstName" class="nav navbar-nav">
         <li><a [routerLink]="['/visiteur/fichesDeFrais']">Fiches</a></li>
-        <li><a [routerLink]="['/visiteur/fraisForfait']">
-          Nouveau frais
-        </a></li>
+        <li><a [routerLink]="['/visiteur/fraisForfait']">Nouveau frais</a></li>
         <li><a [routerLink]="['/login']" >Déconnexion</a></li>
       </ul>
       <p class="navbar-text navbar-right" *ngIf="currentUser?.firstName">

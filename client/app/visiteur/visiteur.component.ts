@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { User } from '../_models';
-
 import { ficheService, AlertService, UserService } from '../_services/index';
-
 @Component({
   moduleId: module.id,
   templateUrl: 'visiteur.component.html'
@@ -17,20 +15,23 @@ export class VisiteurComponent {
     private alertService: AlertService,
     private userService: UserService
   ) {
-
     this.currentUser = this.userService.user;
-    this.ficheDeFrais = this.currentUser.fichesDeFrais;
+    this.ficheDeFrais = [];
     this.ficheCreate();
   }
 
   ficheCreate() {
-    var ficheDeFrais = this.mois[new Date().getMonth()] + " " + (new Date().getFullYear());
-    this.ficheService.create({ date: ficheDeFrais, user: this.currentUser })
+
+    this.ficheService.create({ date: new Date(), user: this.currentUser })
       .subscribe(
       data => {
-        this.userService.user.fichesDeFrais.push({ficheDeFrais, fraisForfait: []});
         this.alertService.success('Fiche crée avec succès', true);
-        console.log(this.userService.user);
+        console.log(this.currentUser._id);
+        this.ficheService.getAll(this.currentUser._id).subscribe(
+          ficheDeFrais => {
+            this.ficheDeFrais = ficheDeFrais;
+          }
+        )
       },
       error => {
         console.log(error);

@@ -5,10 +5,13 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var Q = require('q');
 var mongoose = require('mongoose');
-import { userSchema } from './schema/user.js';
+var moment = require('moment');
+var userSchema = require('../schema/user.js');
 
-mongoose.connect(config.connectionString, function(err){
-	if (err) { throw err; }
+mongoose.connect(config.connectionString, function(err) {
+  if (err) {
+    throw err;
+  }
 });
 
 var userModel = mongoose.model('user', userSchema);
@@ -23,13 +26,14 @@ service.delete = _delete;
 
 module.exports = service;
 
-function authenticate(username, password) {
+function authenticate(Login, password) {
   var deferred = Q.defer();
-
   userModel.findOne({
-    login: login
+    Login: Login
   }, function(err, user) {
-    if (err) deferred.reject(err.name + ': ' + err.message);
+		if (err) {
+			deferred.reject(err.name + ': ' + err.message);
+		}
 
     if (user && bcrypt.compareSync(password, user.hash)) {
       // authentication successful
@@ -38,9 +42,9 @@ function authenticate(username, password) {
         Nom: user.Nom,
         Prenom: user.Prenom,
         Adresse: user.Adresse,
-				Ville: user.Ville,
-				cp: user.cp,
-				dateEmbauche: user.dateEmbauche
+        Ville: user.Ville,
+        cp: user.cp,
+        dateEmbauche: user.dateEmbauche,
         token: jwt.sign({
           sub: user._id
         }, config.secret)
@@ -59,8 +63,8 @@ function getAll() {
 
   userModel.find(null, function(err, users) {
     if (err) {
-			deferred.reject(err.name + ': ' + err.message);
-		}
+      deferred.reject(err.name + ': ' + err.message);
+    }
 
     // return users (without hashed passwords)
     users = _.map(users, function(user) {
@@ -75,39 +79,39 @@ function getAll() {
 
 function create(userParam) {
   var deferred = Q.defer();
-
   // validation
   userModel.findOne({
-      login: userParam.login
+      Login: userParam.Login
     },
     function(err, user) {
       if (err) {
-				deferred.reject(err.name + ': ' + err.message);
-			}
+        deferred.reject(err.name + ': ' + err.message);
+      }
       if (user) {
-        deferred.reject(`Nom d'utilisateur ${userParam.login} déja existants`);
+        deferred.reject(`Nom d'utilisateur ${userParam.Login} déja existants`);
       } else {
-				var user = new userModel(_.omit(userParam, 'password'));
-				user.hash = bcrypt.hashSync(userParam.password, 10);
-				user.save(function (err) {
-					if (err) {
-						return deferred.reject(`Erreur création utilisateur ${userParam.login}`)
-					}
-				});
+        var user = new userModel(_.omit(userParam, 'password'));
+        user.hash = bcrypt.hashSync(userParam.password, 10);
+        user.save(function(err) {
+          if (err) {
+            return deferred.reject(`Erreur création utilisateur ${userParam.Login}`)
+          }
+					deferred.resolve();
+        });
 
-			}
+      }
     });
   return deferred.promise;
 }
 
-function update(login, userParam) {
+function update(Login, userParam) {
   var deferred = Q.defer();
 
   // validation
-  userModel.findOne(login, function(err, user) {
+  userModel.findOne(Login, function(err, user) {
     if (err) deferred.reject(err.name + ': ' + err.message);
 
-    if (user.login !== userParam.login) {
+    if (user.Login !== userParam.Login) {
       // username has changed so check if the new username is already taken
       userModel.findOne({
           username: userParam.username
@@ -130,13 +134,13 @@ function update(login, userParam) {
   function updateUser() {
     // fields to update
     var set = {
-      login: userParam.login,
+      Login: userParam.Login,
       Nom: userParam.Nom,
-			Prenom: userParam.Prenom,
-			Adresse: userParam.Adresse,
-			Ville: userParam.Ville,
+      Prenom: userParam.Prenom,
+      Adresse: userParam.Adresse,
+      Ville: userParam.Ville,
       cp: userParam.cp,
-			dateEmbauche: userParam.dateEmbauche
+      dateEmbauche: userParam.dateEmbauche
     };
 
     // update password if it was entered
@@ -145,7 +149,7 @@ function update(login, userParam) {
     }
 
     userModel.update({
-        login: userParam.login
+        Login: userParam.Login
       }, {
         set
       },
@@ -159,11 +163,11 @@ function update(login, userParam) {
   return deferred.promise;
 }
 
-function _delete(login) {
+function _delete(Login) {
   var deferred = Q.defer();
 
   userModel.remove({
-      login: login
+      Login: Login
     },
     function(err) {
       if (err) deferred.reject(err.name + ': ' + err.message);

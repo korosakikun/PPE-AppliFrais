@@ -1,0 +1,37 @@
+<div class="col-md-6 col-md-offset-3">
+    <h1>Hi {{currentUser.firstName}}!</h1>
+		<p><a [routerLink]="['/login']">Logout</a></p>
+		<div class="" *ngFor="let fiche of ficheDeFrais">
+			<h2>
+				{{ fiche.date }}
+			</h2>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							type frais
+						</th>
+						<th>
+							nombre
+						</th>
+						<th>
+							montant total
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let frai of fiche.fraisForfait">
+						<td>
+							{{ frai.typeFrais.nom }}
+						</td>
+						<td>
+							{{ frai.nombre }}
+						</td>
+						<td>
+							{{ frai.typeFrais.montant * frai.nombre }}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
