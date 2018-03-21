@@ -13,13 +13,13 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul *ngIf="currentUser?.firstName" class="nav navbar-nav">
+      <ul *ngIf="currentUser?.Login" class="nav navbar-nav">
         <li><a [routerLink]="['/visiteur/fichesDeFrais']">Fiches</a></li>
         <li><a [routerLink]="['/visiteur/fraisForfait']">Nouveau frais</a></li>
         <li><a [routerLink]="['/login']" >Déconnexion</a></li>
       </ul>
-      <p class="navbar-text navbar-right" *ngIf="currentUser?.firstName">
-      	{{ currentUser.lastName }} {{ currentUser.firstName }}
+      <p class="navbar-text navbar-right" *ngIf="currentUser?.Login">
+      	{{ currentUser.Nom }} {{ currentUser.Prenom }}
       </p>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

@@ -11,9 +11,8 @@ router.put('/ajoutFrais', ajoutFrais);
 module.exports = router;
 
 function create(req, res) {
-  ficheService.create(req.body)
+  ficheService.create(req.body.user._id)
     .then(function(user) {
-      console.log(user);
       res.sendStatus(200);
     })
     .catch(function(err) {
@@ -32,8 +31,7 @@ function ajoutFrais(req, res) {
 }
 
 function getAll(req, res) {
-  console.log(req._id);
-  ficheService.getAll(req._id)
+  ficheService.getAll(req.body._id)
     .then(function(users) {
       res.send(users);
     })

@@ -27,7 +27,7 @@ export class VisiteurComponent {
       data => {
         this.alertService.success('Fiche crée avec succès', true);
         console.log(this.currentUser._id);
-        this.ficheService.getAll(this.currentUser._id).subscribe(
+        this.ficheService.getAll({_id: this.currentUser._id}).subscribe(
           ficheDeFrais => {
             this.ficheDeFrais = ficheDeFrais;
           }

@@ -1,17 +1,17 @@
 <div class="col-md-6 col-md-offset-3">
     <h2>Register</h2>
     <form name="form" (ngSubmit)="f.form.valid && ajoutFrais()" #f="ngForm" novalidate>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !typeFrais.valid }">
-            <label for="typeFrais">type de frais</label>
-            <select class="form-control" name="typeFrais" (change)="changeTotal()" [(ngModel)]="model.typeFrais" required #typeFrais="ngModel">
-              <option *ngFor="let type of types" [ngValue]="type" >{{type.nom}} ({{type.montant}}€)</option>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !type.valid }">
+            <label for="type">type de frais</label>
+            <select class="form-control" name="type" (change)="changeTotal()" [(ngModel)]="model.type" required #type="ngModel">
+              <option *ngFor="let type of types" [ngValue]="type" >{{type.libelle}} ({{type.montant_unitaire}}€)</option>
             </select>
-            <div *ngIf="f.submitted && !typeFrais.valid" class="help-block">Type frais est requis</div>
+            <div *ngIf="f.submitted && !type.valid" class="help-block">Type frais est requis</div>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !nombre.valid }">
-            <label for="nombre">Nombre</label>
-            <input type="number" class="form-control" name="nombre" (change)="changeTotal()" [(ngModel)]="model.nombre" #nombre="ngModel" required/>
-            <div *ngIf="f.submitted && !nombre.valid" class="help-block"></div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !quantite.valid }">
+            <label for="quantite">Nombre</label>
+            <input type="number" class="form-control" name="quantite" (change)="changeTotal()" [(ngModel)]="model.quantite" #quantite="ngModel" required/>
+            <div *ngIf="f.submitted && !quantite.valid" class="help-block"></div>
         </div>
         <div class="form-group">
           <label for="montantTotal">Montant total</label>
@@ -19,7 +19,6 @@
         </div>
         <div class="form-group">
             <button [disabled]="loading" class="btn btn-primary">Register</button>
-            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
             <a [routerLink]="['/visiteur']" class="btn btn-link">Cancel</a>
         </div>
     </form>

@@ -36,21 +36,21 @@ export class fraisForfaitComponent {
     console.log(this.currentUser);
     this.types = [
       {
-        nom: "restaurant",
-        montant: 40
+        libelle: "restaurant",
+        montant_unitaire: 40
       }, {
-        nom: "hotel",
-        montant: 60
+        libelle: "hotel",
+        montant_unitaire: 60
       }, {
-        nom: 'mixte',
-        montant: 100
+        libelle: 'mixte',
+        montant_unitaire: 100
       }
     ]
   }
 
   changeTotal() {
     if (this.model.nombre) {
-      this.montantTotal = this.model.nombre * this.model.typeFrais.montant;
+      this.montantTotal = this.model.quantite * this.model.type.montant_unitaire;
     }
   }
 

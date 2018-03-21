@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var fraisForfaitSchema = new Schema({
+var fraisSchema = new Schema({
 	date_consommation: { type: Date, default: Date.now},
 	quantite: Number,
 	type: {
@@ -12,4 +12,4 @@ var fraisForfaitSchema = new Schema({
 	dateModification: { type: Date, default: Date.now}
 })
 
-module.exports = fraisForfaitSchema;
+module.exports = fraisSchema;

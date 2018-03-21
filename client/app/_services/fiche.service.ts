@@ -15,8 +15,8 @@ export class ficheService {
     return this.http.put('/ficheDeFrais/' + ficheDeFrais._id, ficheDeFrais);
   }
 
-  getAll(_id: string) {
-    return this.http.post('/ficheDeFrais/getAll', _id);
+  getAll(_id: any) {
+    return this.http.post('/ficheDeFrais/getAll', _id).map((response: Response) => response.json());
   }
 
   delete(_id: string) {

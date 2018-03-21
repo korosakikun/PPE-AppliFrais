@@ -23,14 +23,15 @@ service.ajoutFrais = ajoutFrais;
 
 module.exports = service;
 
-function createFiche(userParam) {
+function createFiche(_id) {
   var deferred = Q.defer();
   var date = moment();
+  console.log(_id);
   ficheDeFraisModel.findOne({
-    user: userParam._id,
+    user: _id,
     mois: {
-      "$gte": moment().startOf('month').toDate(),
-      "$lt": moment().endOf('month').toDate()
+      "$gte": moment().startOf('month').add(10, 'd').toDate(),
+      "$lt": moment().endOf('month').add(10, 'd').toDate()
     }
   }, function(err, fiche) {
     if (err) {
@@ -40,7 +41,7 @@ function createFiche(userParam) {
       deferred.resolve();
     } else {
       var fiche = new ficheDeFraisModel({
-        user: userParam._id,
+        user: _id,
         etat: "Creer",
         fraisForfait: []
       });
@@ -56,8 +57,6 @@ function createFiche(userParam) {
 
 function getAll(_id) {
   var deferred = Q.defer();
-  console.log(_id)
-
   ficheDeFraisModel.find({user: _id}, function(err, ficheDeFrais) {
     if (err) {
       deferred.reject(err.name + ': ' + err.message);
@@ -71,11 +70,12 @@ function getAll(_id) {
 
 function ajoutFrais(userParam) {
   var deferred = Q.defer();
+  console.log(userParam.fraisForfait);
   ficheDeFraisModel.update({
       user: userParam._id,
       mois: {
-        "$gte": moment().startOf('month').toDate(),
-        "$lt": moment().endOf('month').toDate()
+        "$gte":moment().startOf('month').add(10, 'd').toDate(),
+        "$lt": moment().endOf('month').add(10, 'd').toDate()
       }
     }, {
       $push: {
