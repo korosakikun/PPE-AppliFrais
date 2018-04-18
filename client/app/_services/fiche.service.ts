@@ -15,16 +15,24 @@ export class ficheService {
     return this.http.put('/ficheDeFrais/' + ficheDeFrais._id, ficheDeFrais);
   }
 
-  getAll(_id: any) {
-    return this.http.post('/ficheDeFrais/getAll', _id).map((response: Response) => response.json());
+  getAllForUser(_id: any) {
+    return this.http.post('/ficheDeFrais/getAllForUser', _id).map((response: Response) => response.json());
+  }
+
+  getAll(){
+    return this.http.post('/ficheDeFrais/getAll', '').map((response: Response) => response.json());
   }
 
   delete(_id: string) {
     return this.http.delete('/ficheDeFrais/' + _id);
   }
 
-  ajoutFrais(_id: string, date: string, fraisForfait: fraisForfait) {
-    var param = { _id, date, fraisForfait };
+  ajoutFrais(_id: string, fraisForfait: fraisForfait) {
+    var param = { _id, fraisForfait };
     return this.http.put('/ficheDeFrais/ajoutFrais', param);
+  }
+  ajoutFraisHorsForfait(_id: string, fraisHorsForfait: fraisForfait) {
+    var param = { _id, fraisHorsForfait };
+    return this.http.put('/ficheDeFrais/ajoutFraisHorsForfait', param);
   }
 }

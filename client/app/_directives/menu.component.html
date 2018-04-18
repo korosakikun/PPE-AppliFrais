@@ -13,7 +13,7 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul *ngIf="currentUser?.Login" class="nav navbar-nav">
+      <ul *ngIf="currentUser?.Nom && currentUser?.type === 'visiteur'" class="nav navbar-nav">
         <li><a [routerLink]="['/visiteur/fichesDeFrais']">Fiches</a></li>
         <li><a [routerLink]="['/visiteur/fraisForfait']">Nouveau frais</a></li>
         <li><a [routerLink]="['/login']" >Déconnexion</a></li>

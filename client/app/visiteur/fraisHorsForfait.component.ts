@@ -5,24 +5,12 @@ import { ficheService, AlertService, UserService } from '../_services/index';
 
 @Component({
   moduleId: module.id,
-  templateUrl: 'fraisForfait.component.html'
+  templateUrl: 'fraisHorsForfait.component.html'
 })
 
-export class fraisForfaitComponent {
+export class fraisHorsForfaitComponent {
   currentUser: User;
   ficheDeFrais: any;
-  types: any = [
-    {
-      nom: "restaurant",
-      montant: 40
-    }, {
-      nom: "hotel",
-      montant: 60
-    }, {
-      nom: 'mixte',
-      montant: 100
-    }
-  ];
   montantTotal: number = 0;
   model: any = {};
   constructor(
@@ -31,18 +19,7 @@ export class fraisForfaitComponent {
     private userService: UserService
   ) {
     this.currentUser = this.userService.user;
-    this.types = [
-      {
-        libelle: "restaurant",
-        montant_unitaire: 40
-      }, {
-        libelle: "hotel",
-        montant_unitaire: 60
-      }, {
-        libelle: 'mixte',
-        montant_unitaire: 100
-      }
-    ]
+    this.model.type = {};
   }
 
   changeTotal() {
@@ -51,10 +28,10 @@ export class fraisForfaitComponent {
     }
   }
 
-  ajoutFrais() {
-    this.ficheService.ajoutFrais(this.currentUser._id, this.model)
+  ajoutFraisHorsForfait() {
+    this.ficheService.ajoutFraisHorsForfait(this.currentUser._id, this.model)
       .subscribe( data => {
-        this.alertService.success('frais rajouter à ce mois', true);
+        this.alertService.success('frais hors forfait crée avec succès', true);
       }, error => {
         this.alertService.error(error);
       })

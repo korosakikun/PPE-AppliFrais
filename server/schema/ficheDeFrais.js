@@ -4,7 +4,8 @@ var fraisSchema = require('./frais.js');
 
 var ficheDeFraisSchema = new Schema({
 	user: Schema.Types.ObjectId,
-	mois: {type: Date, default: Date.now},
+	mois: String,
+	annee: Number,
 	etat: String,
 	fraisForfait: [ fraisSchema ],
 	fraisHorsForfait: [ fraisSchema ],

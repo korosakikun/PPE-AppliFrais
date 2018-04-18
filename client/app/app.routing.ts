@@ -11,6 +11,7 @@ const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'visiteur', loadChildren: "app/visiteur/visiteur.module#VisiteurModule", canActivate: [AuthGuard]},
+    { path: 'comptable', loadChildren: "app/comptable/comptable.module#VisiteurModule", canActivate: [AuthGuard]},
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
 ];

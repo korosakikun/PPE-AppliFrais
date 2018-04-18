@@ -21,20 +21,19 @@ export class VisiteurComponent {
   }
 
   ficheCreate() {
-
     this.ficheService.create({ date: new Date(), user: this.currentUser })
       .subscribe(
       data => {
-        this.alertService.success('Fiche crée avec succès', true);
-        console.log(this.currentUser._id);
-        this.ficheService.getAll({_id: this.currentUser._id}).subscribe(
+        this.ficheService.getAllForUser({_id: this.currentUser._id}).subscribe(
           ficheDeFrais => {
             this.ficheDeFrais = ficheDeFrais;
+            this.ficheDeFrais.forEach((ficheDeFrais)=> {
+              ficheDeFrais.mois = this.mois[ficheDeFrais.mois];
+            })
           }
         )
       },
       error => {
-        console.log(error);
         this.alertService.error(error);
       }
       )

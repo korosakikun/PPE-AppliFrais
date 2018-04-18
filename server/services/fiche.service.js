@@ -18,18 +18,19 @@ var ficheDeFraisModel = mongoose.model('ficheDeFrais', ficheDeFraisSchema);
 var service = {};
 
 service.create = createFiche;
-service.getAll = getAll;
+service.getAllForUser = getAllForUser;
 service.ajoutFrais = ajoutFrais;
+service.ajoutFraisHorsForfait = ajoutFraisHorsForfait;
+service.getAll = getAll;
 
 module.exports = service;
 
 function createFiche(_id) {
   var deferred = Q.defer();
-  var date = moment();
   console.log(_id);
   ficheDeFraisModel.findOne({
     user: _id,
-    mois: {
+    dateCreation: {
       "$gte": moment().startOf('month').add(10, 'd').toDate(),
       "$lt": moment().endOf('month').add(10, 'd').toDate()
     }
@@ -40,10 +41,14 @@ function createFiche(_id) {
     if (fiche) {
       deferred.resolve();
     } else {
+      var annee = moment().year();
+      var mois = moment().subtract(9, 'd').month();
       var fiche = new ficheDeFraisModel({
         user: _id,
         etat: "Creer",
-        fraisForfait: []
+        fraisForfait: [],
+        annee,
+        mois
       });
       fiche.save(function(err) {
         if (err) {
@@ -55,13 +60,24 @@ function createFiche(_id) {
   return deferred.promise;
 }
 
-function getAll(_id) {
+function getAllForUser(_id) {
   var deferred = Q.defer();
   ficheDeFraisModel.find({user: _id}, function(err, ficheDeFrais) {
     if (err) {
       deferred.reject(err.name + ': ' + err.message);
     }
+    deferred.resolve(ficheDeFrais);
+  });
 
+  return deferred.promise;
+}
+
+function getAll() {
+  var deferred = Q.defer();
+  ficheDeFraisModel.find(null, function(err, ficheDeFrais) {
+    if (err) {
+      deferred.reject(err.name + ': ' + err.message);
+    }
     deferred.resolve(ficheDeFrais);
   });
 
@@ -70,16 +86,39 @@ function getAll(_id) {
 
 function ajoutFrais(userParam) {
   var deferred = Q.defer();
-  console.log(userParam.fraisForfait);
+  console.log(userParam);
   ficheDeFraisModel.update({
       user: userParam._id,
-      mois: {
+      dateCreation: {
         "$gte":moment().startOf('month').add(10, 'd').toDate(),
         "$lt": moment().endOf('month').add(10, 'd').toDate()
       }
     }, {
       $push: {
         'fraisForfait': userParam.fraisForfait
+      }
+    },
+    function(err) {
+      if (err) {
+        deferred.reject(err.name + ': ' + err.message)
+      };
+      deferred.resolve();
+    });
+  return deferred.promise;
+}
+
+function ajoutFraisHorsForfait(userParam) {
+  var deferred = Q.defer();
+  console.log(userParam);
+  ficheDeFraisModel.update({
+      user: userParam._id,
+      dateCreation: {
+        "$gte":moment().startOf('month').add(10, 'd').toDate(),
+        "$lt": moment().endOf('month').add(10, 'd').toDate()
+      }
+    }, {
+      $push: {
+        'fraisHorsForfait': userParam.fraisHorsForfait
       }
     },
     function(err) {

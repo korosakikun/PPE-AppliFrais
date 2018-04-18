@@ -45,6 +45,7 @@ function authenticate(Login, password) {
         Ville: user.Ville,
         cp: user.cp,
         dateEmbauche: user.dateEmbauche,
+        type: user.type,
         token: jwt.sign({
           sub: user._id
         }, config.secret)

@@ -22,13 +22,13 @@
 				<tbody>
 					<tr *ngFor="let frai of fiche.fraisForfait">
 						<td>
-							{{ frai.typeFrais.nom }}
+							{{ frai.type.libelle }}
 						</td>
 						<td>
-							{{ frai.nombre }}
+							{{ frai.quantite }}
 						</td>
 						<td>
-							{{ frai.typeFrais.montant * frai.nombre }}
+							{{ frai.type.montant_unitaire * frai.quantite }}
 						</td>
 					</tr>
 				</tbody>
