@@ -15,10 +15,20 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul *ngIf="currentUser?.Nom && currentUser?.type === 'visiteur'" class="nav navbar-nav">
         <li><a [routerLink]="['/visiteur/fichesDeFrais']">Fiches</a></li>
-        <li><a [routerLink]="['/visiteur/fraisForfait']">Nouveau frais</a></li>
+        <li><a [routerLink]="['/visiteur/fraisForfait']">Nouveau frais forfait</a></li>
+        <li><a [routerLink]="['/visiteur/fraisHorsForfait']">Nouveau frais hors forfait</a></li>
         <li><a [routerLink]="['/login']" >Déconnexion</a></li>
       </ul>
-      <p class="navbar-text navbar-right" *ngIf="currentUser?.Login">
+      <ul *ngIf="currentUser?.Nom && currentUser?.type === 'comptable'" class="nav navbar-nav">
+        <li><a [routerLink]="['/comptable']">Consulter toutes les fiches</a></li>
+        <li><a [routerLink]="['/login']" >Déconnexion</a></li>
+      </ul>
+      <ul *ngIf="currentUser?.Nom && currentUser?.type === 'admin'" class="nav navbar-nav">
+        <li><a [routerLink]="['/admin/createUser']">Crée utilisateur</a></li>
+        <li><a [routerLink]="['/admin']">Liste utilisateur</a></li>
+        <li><a [routerLink]="['/login']" >Déconnexion</a></li>
+      </ul>
+      <p class="navbar-text navbar-right" *ngIf="currentUser?.Nom">
       	{{ currentUser.Nom }} {{ currentUser.Prenom }}
       </p>
     </div><!-- /.navbar-collapse -->

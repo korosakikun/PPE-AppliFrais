@@ -5,10 +5,10 @@ import { AlertService, UserService } from '../_services/index';
 
 @Component({
   moduleId: module.id,
-  templateUrl: 'register.component.html'
+  templateUrl: 'createUser.component.html'
 })
 
-export class RegisterComponent {
+export class createUserComponent {
   model: any = {};
   loading = false;
 
@@ -21,8 +21,8 @@ export class RegisterComponent {
     this.loading = true;
     this.userService.create(this.model).subscribe(
       data => {
-        this.alertService.success('Registration successful', true);
-        this.router.navigate(['/login']);
+        this.alertService.success('Ajout d\'utilisateur effectué', true);
+        this.router.navigate(['/admin']);
       },
       error => {
         this.alertService.error(error);

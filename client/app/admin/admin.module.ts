@@ -7,9 +7,8 @@ import { customHttpProvider } from '../_helpers/index';
 import { AlertComponent } from '../_directives/index';
 import { AuthGuard } from '../_guards/index';
 import { AlertService, AuthenticationService, UserService } from '../_services/index';
-import { VisiteurComponent } from './visiteur.component';
-import { fraisForfaitComponent } from './fraisForfait.component';
-import { fraisHorsForfaitComponent } from './fraisHorsForfait.component';
+import { AdminComponent } from './admin.component';
+import { createUserComponent } from './createUser.component';
 
 @NgModule({
     imports: [
@@ -17,17 +16,15 @@ import { fraisHorsForfaitComponent } from './fraisHorsForfait.component';
         FormsModule,
         RouterModule.forChild(
           [
-            { path: '', component: VisiteurComponent},
-            { path: 'fraisForfait', component: fraisForfaitComponent},
-            { path: 'fraisHorsForfait', component: fraisHorsForfaitComponent}
+            { path: '', component: AdminComponent},
+            { path: 'createUser', component: createUserComponent}
           ]
         )
     ],
     declarations: [
-      VisiteurComponent,
-      fraisForfaitComponent,
-      fraisHorsForfaitComponent
+      AdminComponent,
+      createUserComponent
     ],
 })
 
-export class VisiteurModule { }
+export class AdminModule { }

@@ -25,9 +25,9 @@ export class VisiteurComponent {
       .subscribe(
       data => {
         this.ficheService.getAllForUser({_id: this.currentUser._id}).subscribe(
-          ficheDeFrais => {
-            this.ficheDeFrais = ficheDeFrais;
-            this.ficheDeFrais.forEach((ficheDeFrais)=> {
+          data => {
+            this.ficheDeFrais = data.reverse();
+            this.ficheDeFrais.forEach((ficheDeFrais: any)=> {
               ficheDeFrais.mois = this.mois[ficheDeFrais.mois];
             })
           }

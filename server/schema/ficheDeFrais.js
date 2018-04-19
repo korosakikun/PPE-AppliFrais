@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 var fraisSchema = require('./frais.js');
 
 var ficheDeFraisSchema = new Schema({
-	user: Schema.Types.ObjectId,
+	user: {type: Schema.Types.ObjectId, ref: "user"},
 	mois: String,
 	annee: Number,
 	etat: String,

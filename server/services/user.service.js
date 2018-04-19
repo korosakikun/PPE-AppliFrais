@@ -62,7 +62,7 @@ function authenticate(Login, password) {
 function getAll() {
   var deferred = Q.defer();
 
-  userModel.find(null, function(err, users) {
+  userModel.find({type: { $ne: "admin"}}, function(err, users) {
     if (err) {
       deferred.reject(err.name + ': ' + err.message);
     }

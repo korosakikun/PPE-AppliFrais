@@ -1,0 +1,14 @@
+<div class="col-md-6 col-md-offset-3">
+    <h2>Bonjour administrateur</h2>
+    <h3>
+      Vous pouvez gerer tout les utilisateur ici
+    </h3>
+    <h3>Liste des utilisateur:</h3>
+    <ul>
+        <li *ngFor="let user of users">
+            {{user.type}}-{{user.Login}} ({{user.Nom}} {{user.Prenom}})
+            - <a (click)="deleteUser(user._id)">Delete</a>
+        </li>
+    </ul>
+    <p><a [routerLink]="['/login']">Logout</a></p>
+</div>

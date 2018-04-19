@@ -74,10 +74,11 @@ function getAllForUser(_id) {
 
 function getAll() {
   var deferred = Q.defer();
-  ficheDeFraisModel.find(null, function(err, ficheDeFrais) {
+  ficheDeFraisModel.find(null).populate("user").exec(function(err, ficheDeFrais) {
     if (err) {
       deferred.reject(err.name + ': ' + err.message);
     }
+    console.log(ficheDeFrais);
     deferred.resolve(ficheDeFrais);
   });
 

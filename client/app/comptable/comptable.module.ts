@@ -24,4 +24,4 @@ import { ComptableComponent } from './comptable.component';
     ],
 })
 
-export class VisiteurModule { }
+export class ComptableModule { }

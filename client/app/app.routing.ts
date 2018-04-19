@@ -9,9 +9,9 @@ import { VisiteurModule } from './visiteur/visiteur.module'
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
     { path: 'visiteur', loadChildren: "app/visiteur/visiteur.module#VisiteurModule", canActivate: [AuthGuard]},
-    { path: 'comptable', loadChildren: "app/comptable/comptable.module#VisiteurModule", canActivate: [AuthGuard]},
+    { path: 'comptable', loadChildren: "app/comptable/comptable.module#ComptableModule", canActivate: [AuthGuard]},
+    { path: 'admin', loadChildren: "app/admin/admin.module#AdminModule", canActivate: [AuthGuard]},
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
 ];

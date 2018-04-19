@@ -1,6 +1,4 @@
 <div class="col-md-6 col-md-offset-3">
-	<button class="btn btn-default" [routerLink]="['/visiteur/fraisForfait']">Ajout d'un frais forfaitisée</button>
-	<button class="btn btn-default" [routerLink]="['/visiteur/fraisHorsForfait']">Ajout d'un frais hors forfait</button>
 	<div class="" *ngFor="let fiche of ficheDeFrais">
 		<h2>
 			{{ fiche.mois | uppercase}} {{fiche.annee}}
@@ -8,6 +6,7 @@
 		<h3>
 			Frais forfait
 		</h3>
+		<!-- TODO mettre les deux tableau l'un a coté de l'autre-->
 		<table class="table">
 			<thead>
 				<tr>

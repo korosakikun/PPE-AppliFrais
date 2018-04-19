@@ -12,9 +12,6 @@ import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService, UserService, ficheService } from './_services/index';
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
-import { RegisterComponent } from './register/index';
-
-import { VisiteurModule } from './visiteur/visiteur.module'
 
 @NgModule({
     imports: [
@@ -28,8 +25,7 @@ import { VisiteurModule } from './visiteur/visiteur.module'
         AlertComponent,
         MenuComponent,
         HomeComponent,
-        LoginComponent,
-        RegisterComponent
+        LoginComponent
     ],
     providers: [
         customHttpProvider,
