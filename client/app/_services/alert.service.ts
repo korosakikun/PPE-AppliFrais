@@ -3,6 +3,7 @@ import { Router, NavigationStart } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
+//service permettant de gerer les notification de success et d'erreur
 @Injectable()
 export class AlertService {
     private subject = new Subject<any>();

@@ -9,6 +9,7 @@ import 'rxjs/add/observable/throw';
 
 import { UserService } from '../_services/user.service';
 
+// class hérité de HTTP pour permettre l'ajout d'un token jwt a chaque requetes au serveur
 @Injectable()
 export class CustomHttp extends Http {
     constructor(backend: ConnectionBackend, defaultOptions: RequestOptions) {

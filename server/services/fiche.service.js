@@ -22,12 +22,15 @@ service.getAllForUser = getAllForUser;
 service.ajoutFrais = ajoutFrais;
 service.ajoutFraisHorsForfait = ajoutFraisHorsForfait;
 service.getAll = getAll;
+service.changeStateFrais = changeStateFrais;
+service.delete = _delete;
 
 module.exports = service;
 
 function createFiche(_id) {
   var deferred = Q.defer();
   console.log(_id);
+  //on verifie si une fiche existe déja pour le mois en cours
   ficheDeFraisModel.findOne({
     user: _id,
     dateCreation: {
@@ -38,25 +41,60 @@ function createFiche(_id) {
     if (err) {
       deferred.reject(err.name + ": " + err.message);
     }
+    //si c'est le cas on ne fait rien
     if (fiche) {
       deferred.resolve();
     } else {
-      var annee = moment().year();
-      var mois = moment().subtract(9, 'd').month();
-      var fiche = new ficheDeFraisModel({
-        user: _id,
-        etat: "Creer",
-        fraisForfait: [],
-        annee,
-        mois
-      });
-      fiche.save(function(err) {
-        if (err) {
-          deferred.reject(err.name + ': ' + err.message);
-        }
-      });
+      getAllForUser(_id).then(function(fiches) {
+        fiches.forEach( (fiche) => {
+          changeStateFiches(fiche._id, "cloturée").then(function(){
+            console.log("success");
+            var annee = moment().year();
+            var mois = moment().subtract(9, 'd').month();
+            var fiche = new ficheDeFraisModel({
+              user: _id,
+              etat: "Creer",
+              fraisForfait: [],
+              fraisHorsForfait: [],
+              annee,
+              mois
+            });
+            fiche.save(function(err) {
+              if (err) {
+                deferred.reject(err.name + ': ' + err.message);
+              }
+            });
+          }).catch(function(err){
+            console.log("err");
+          })
+        })
+      }).catch( function(err) {
+        console.log(err);
+      })
+      //sinon on crée une nouvelles fiche pour le mois en cours
     }
   })
+  return deferred.promise;
+}
+
+function changeStateFiches(_id, etat) {
+  var deferred = Q.defer();
+  //on update le frais specifier avec un nouveau etat
+  ficheDeFraisModel.update(
+    {
+      _id: _id
+    },
+    {
+      "$set": {
+        "etat": etat
+      }
+    },
+    function(err) {
+      if (err) {
+        deferred.reject(err.name + ': ', err.message)
+      };
+      deferred.resolve();
+    });
   return deferred.promise;
 }
 
@@ -74,7 +112,8 @@ function getAllForUser(_id) {
 
 function getAll() {
   var deferred = Q.defer();
-  ficheDeFraisModel.find(null).populate("user").exec(function(err, ficheDeFrais) {
+  //on récupere toute les fiche de frais trier par visiteurs et on rajoute les informations sur les visiteurs
+  ficheDeFraisModel.find(null).sort({"user": 1}).populate("user").exec(function(err, ficheDeFrais) {
     if (err) {
       deferred.reject(err.name + ': ' + err.message);
     }
@@ -85,9 +124,30 @@ function getAll() {
   return deferred.promise;
 }
 
+function changeStateFrais(fiche, frai, etat) {
+  var deferred = Q.defer();
+  //on update le frais specifier avec un nouveau etat
+  ficheDeFraisModel.update(
+    {
+      _id: fiche, "fraisForfait._id" : frai
+    },
+    {
+      "$set": {
+        "fraisForfait.$.etat": etat
+      }
+    },
+    function(err) {
+      if (err) {
+        deferred.reject(err.name + ': ', err.message)
+      };
+      deferred.resolve();
+    });
+  return deferred.promise;
+}
+
 function ajoutFrais(userParam) {
   var deferred = Q.defer();
-  console.log(userParam);
+  // ajoute un frais sur le mois en cours
   ficheDeFraisModel.update({
       user: userParam._id,
       dateCreation: {
@@ -110,7 +170,7 @@ function ajoutFrais(userParam) {
 
 function ajoutFraisHorsForfait(userParam) {
   var deferred = Q.defer();
-  console.log(userParam);
+  //ajoute un frais hors forfait sur le mois en cours
   ficheDeFraisModel.update({
       user: userParam._id,
       dateCreation: {
@@ -128,5 +188,27 @@ function ajoutFraisHorsForfait(userParam) {
       };
       deferred.resolve();
     });
+  return deferred.promise;
+}
+
+function _delete(fiche, frai) {
+  var deferred = Q.defer();
+
+  ficheDeFraisModel.update({
+      _id: fiche,
+      "fraisForfait._id" : frai
+    },
+    {
+      $pull : {
+        "fraisForfait": {
+          "_id": frai
+        }
+      }
+    }, function(err) {
+      if (err) deferred.reject(err.name + ': ' + err.message);
+
+      deferred.resolve();
+    });
+
   return deferred.promise;
 }

@@ -3,6 +3,8 @@ import { User } from '../_models';
 
 import { ficheService, AlertService, UserService } from '../_services/index';
 
+//composant permettant d'ajouter un frais hors forfait, reste à rajouter le systeme de piece jointes
+// Voir commentaire frais forfait pour plus de précision 
 @Component({
   moduleId: module.id,
   templateUrl: 'fraisHorsForfait.component.html'
@@ -21,7 +23,6 @@ export class fraisHorsForfaitComponent {
     this.currentUser = this.userService.user;
     this.model.type = {};
   }
-
   changeTotal() {
     if (this.model.quantite) {
       this.montantTotal = this.model.quantite * this.model.type.montant_unitaire;
@@ -29,6 +30,7 @@ export class fraisHorsForfaitComponent {
   }
 
   ajoutFraisHorsForfait() {
+    this.model.etat = "Creer";
     this.ficheService.ajoutFraisHorsForfait(this.currentUser._id, this.model)
       .subscribe( data => {
         this.alertService.success('frais hors forfait crée avec succès', true);

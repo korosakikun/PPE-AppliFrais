@@ -1,21 +1,25 @@
 <div class="col-md-6 col-md-offset-3">
     <h2>Ajout frais hors forfait</h2>
     <form name="form" (ngSubmit)="f.form.valid && ajoutFraisHorsForfait()" #f="ngForm" novalidate>
+      <!-- Affiche le champ de libelle du frais hors forfait -->
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !libelle.valid }">
             <label for="libelle">Libelle</label>
             <input type="text" name="libelle" class="form-control" [(ngModel)]="model.type.libelle" #libelle="ngModel" required/>
             <div *ngIf="f.submitted && !libelle.valid" class="help-block">Le libelle est requis</div>
         </div>
+        <!-- Affiche le champ de quantité -->
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !quantite.valid }">
             <label for="quantite">Nombre</label>
             <input type="number" class="form-control" name="quantite" (change)="changeTotal()" [(ngModel)]="model.quantite" #quantite="ngModel" required/>
             <div *ngIf="f.submitted && !quantite.valid" class="help-block"></div>
         </div>
+        <!-- Affiche le champ de montant unitaire -->
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !quantite.valid }">
             <label for="montant_unitaire">Montant unitaire</label>
             <input type="number" class="form-control" name="montant_unitaire" (change)="changeTotal()" [(ngModel)]="model.type.montant_unitaire" #montant_unitaire="ngModel" required/>
             <div *ngIf="f.submitted && !montant_unitaire.valid" class="help-block"></div>
         </div>
+        <!-- Affiche la valeur calculée en fonction des informations saisie précédemment -->
         <div class="form-group">
           <label for="montantTotal">Montant total</label>
           <input type="number" class="form-control" name="montantTotal" [(ngModel)]="montantTotal" required readonly/>

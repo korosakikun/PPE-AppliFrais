@@ -23,7 +23,12 @@ export class AdminComponent {
     this.loadAllUsers();
   }
 
+  //on récupere la liste de tout les utilisateur excepter les administrateur
   private loadAllUsers() {
       this.userService.getAll().subscribe(users => { this.users = users; });
+  }
+
+  deleteUser(_id: string) {
+    this.userService.delete(_id).subscribe(() => { this.loadAllUsers() });
   }
 }

@@ -12,6 +12,7 @@ import { fraisForfaitComponent } from './fraisForfait.component';
 import { fraisHorsForfaitComponent } from './fraisHorsForfait.component';
 
 @NgModule({
+    // on imports tout les modules par défaut et définie les routes avec leur composant liée
     imports: [
         CommonModule,
         FormsModule,
@@ -23,6 +24,7 @@ import { fraisHorsForfaitComponent } from './fraisHorsForfait.component';
           ]
         )
     ],
+    // on déclare chaque composant
     declarations: [
       VisiteurComponent,
       fraisForfaitComponent,

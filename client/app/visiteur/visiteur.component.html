@@ -1,5 +1,7 @@
 <div class="col-md-6 col-md-offset-3">
 	<div class="" *ngFor="let fiche of ficheDeFrais">
+		<!-- On affiche pour chaque mois la fiche de frais liée ainsi que ces frais forfait et hors forfait
+		dans 2 tableau différent-->
 		<h2>
 			{{ fiche.mois | uppercase}} {{fiche.annee}}
 		</h2>
@@ -19,6 +21,12 @@
 					<th>
 						montant total
 					</th>
+					<th>
+						Etat
+					</th>
+					<th>
+						Supprimer frais
+					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -31,6 +39,12 @@
 					</td>
 					<td>
 						{{ frai.type.montant_unitaire * frai.quantite }}
+					</td>
+					<td>
+						{{ frai.etat }}
+					</td>
+					<td>
+						<button class="btn btn-warning" (click)="deleteFrais(fiche._id ,frai._id)">Supprimer le frai</button>
 					</td>
 				</tr>
 			</tbody>

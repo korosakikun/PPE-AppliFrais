@@ -4,7 +4,7 @@ var express = require('express');
 var router = express.Router();
 var userService = require('services/user.service');
 
-// routes
+// liste des routes du controlleur fiche, ces routes sont appelée du coté client et renvoi vers une fonction
 router.post('/authenticate', authenticate);
 router.post('/register', register);
 router.get('/', getAll);

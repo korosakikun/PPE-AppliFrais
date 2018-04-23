@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { UserService } from './user.service';
 
+//service permettant la mise en place du login et du logout
 @Injectable()
 export class AuthenticationService {
   constructor(private http: Http, public userService: UserService) { }
@@ -14,6 +15,7 @@ export class AuthenticationService {
         // login successful if there's a jwt token in the response
         let user = response.json();
         if (user && user.token) {
+          // on stock l'utilisateur dans le localStorage et dans le service user
           this.userService.user = user;
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(user));

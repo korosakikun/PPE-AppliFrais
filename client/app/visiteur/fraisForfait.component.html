@@ -1,6 +1,7 @@
 <div class="col-md-6 col-md-offset-3">
     <h2>Ajout frais forfait</h2>
     <form name="form" (ngSubmit)="f.form.valid && ajoutFrais()" #f="ngForm" novalidate>
+      <!-- Affiche le champ type de frais -->
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !type.valid }">
             <label for="type">type de frais</label>
             <select class="form-control" name="type" (change)="changeTotal()" [(ngModel)]="model.type" required #type="ngModel">
@@ -8,11 +9,13 @@
             </select>
             <div *ngIf="f.submitted && !type.valid" class="help-block">Type frais est requis</div>
         </div>
+        <!-- Affiche le champ quantite -->
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !quantite.valid }">
             <label for="quantite">Nombre</label>
             <input type="number" class="form-control" name="quantite" (change)="changeTotal()" [(ngModel)]="model.quantite" #quantite="ngModel" required/>
             <div *ngIf="f.submitted && !quantite.valid" class="help-block"></div>
         </div>
+        <!-- Affiche le champ calculée montant total en fonction des valeur saisie avant -->
         <div class="form-group">
           <label for="montantTotal">Montant total</label>
           <input type="number" class="form-control" name="montantTotal" [(ngModel)]="montantTotal" required readonly/>

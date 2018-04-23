@@ -10,7 +10,6 @@ import { customHttpProvider } from './_helpers/index';
 import { AlertComponent, MenuComponent } from './_directives/index';
 import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService, UserService, ficheService } from './_services/index';
-import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 
 @NgModule({
@@ -24,7 +23,6 @@ import { LoginComponent } from './login/index';
         AppComponent,
         AlertComponent,
         MenuComponent,
-        HomeComponent,
         LoginComponent
     ],
     providers: [

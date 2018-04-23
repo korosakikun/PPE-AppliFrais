@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         // reset login status
+        // si on revient au login on utilise la fonction logout pour nous déconnecter
         this.authenticationService.logout();
 
         // get return url from route parameters or default to '/'
@@ -29,8 +30,10 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.loading = true;
+        //on envoie a la fonction login, le login et le password de l'utilisateur
         this.authenticationService.login(this.model.Login, this.model.password)
             .subscribe(
+                //si succes on redirige selon le type d'utilisateur
                 data => {
                     switch (data.type) {
                       case 'visiteur':
@@ -43,6 +46,7 @@ export class LoginComponent implements OnInit {
                         this.router.navigate(['/admin']);
                     }
                 },
+                //sinon on affiche l'erreur
                 error => {
                     this.alertService.error(error);
                     this.loading = false;

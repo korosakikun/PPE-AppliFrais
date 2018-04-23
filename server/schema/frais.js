@@ -8,6 +8,7 @@ var fraisSchema = new Schema({
 		libelle: String,
 		montant_unitaire: Number
 	},
+	etat: String,
 	dateCreation: { type: Date, default: Date.now},
 	dateModification: { type: Date, default: Date.now}
 })

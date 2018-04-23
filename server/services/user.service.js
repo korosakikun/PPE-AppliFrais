@@ -26,6 +26,7 @@ service.delete = _delete;
 
 module.exports = service;
 
+//permet de s'authentifier
 function authenticate(Login, password) {
   var deferred = Q.defer();
   userModel.findOne({
@@ -34,7 +35,7 @@ function authenticate(Login, password) {
 		if (err) {
 			deferred.reject(err.name + ': ' + err.message);
 		}
-
+    // on hash le mot de passe dans la base de donnée
     if (user && bcrypt.compareSync(password, user.hash)) {
       // authentication successful
       deferred.resolve({
@@ -46,6 +47,7 @@ function authenticate(Login, password) {
         cp: user.cp,
         dateEmbauche: user.dateEmbauche,
         type: user.type,
+        //on crée un token a l'aide de l'id de l'utilisateur
         token: jwt.sign({
           sub: user._id
         }, config.secret)
@@ -61,7 +63,7 @@ function authenticate(Login, password) {
 
 function getAll() {
   var deferred = Q.defer();
-
+  //récupere tout les utilisateur sauf les admin
   userModel.find({type: { $ne: "admin"}}, function(err, users) {
     if (err) {
       deferred.reject(err.name + ': ' + err.message);
@@ -80,7 +82,7 @@ function getAll() {
 
 function create(userParam) {
   var deferred = Q.defer();
-  // validation
+  // crée un visiteur si il n'existe pas déja
   userModel.findOne({
       Login: userParam.Login
     },
