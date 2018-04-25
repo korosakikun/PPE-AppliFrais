@@ -29,7 +29,6 @@ module.exports = service;
 
 function createFiche(_id) {
   var deferred = Q.defer();
-  console.log(_id);
   //on verifie si une fiche existe déja pour le mois en cours
   ficheDeFraisModel.findOne({
     user: _id,
@@ -45,33 +44,33 @@ function createFiche(_id) {
     if (fiche) {
       deferred.resolve();
     } else {
+      //sinon on crée une nouvelles fiche pour le mois en cours
       getAllForUser(_id).then(function(fiches) {
         fiches.forEach( (fiche) => {
           changeStateFiches(fiche._id, "cloturée").then(function(){
-            console.log("success");
-            var annee = moment().year();
-            var mois = moment().subtract(9, 'd').month();
-            var fiche = new ficheDeFraisModel({
-              user: _id,
-              etat: "Creer",
-              fraisForfait: [],
-              fraisHorsForfait: [],
-              annee,
-              mois
-            });
-            fiche.save(function(err) {
-              if (err) {
-                deferred.reject(err.name + ': ' + err.message);
-              }
-            });
           }).catch(function(err){
-            console.log("err");
+            console.log(err);
           })
         })
+        var annee = moment().year();
+        var mois = moment().subtract(9, 'd').month();
+        var fiche = new ficheDeFraisModel({
+          user: _id,
+          etat: "Creer",
+          fraisForfait: [],
+          fraisHorsForfait: [],
+          annee,
+          mois
+        });
+        fiche.save(function(err) {
+          if (err) {
+            deferred.reject(err.name + ': ' + err.message);
+          }
+        });
+        deferred.resolve();
       }).catch( function(err) {
-        console.log(err);
+        deferred.reject(err.name + ": " + err.message);
       })
-      //sinon on crée une nouvelles fiche pour le mois en cours
     }
   })
   return deferred.promise;
