@@ -1,102 +1,106 @@
-<div class="col-md-6 col-md-offset-3">
+<div class="row">
 	<div class="" *ngFor="let fiche of ficheDeFrais">
 		<!-- On affiche pour chaque mois la fiche de frais liée ainsi que ces frais forfait et hors forfait
 		dans 2 tableau différent-->
 		<h2>
 			{{ fiche.mois | uppercase}} {{fiche.annee}}
 		</h2>
-		<h3>
-			Frais forfait
-		</h3>
-		<!-- TODO mettre les deux tableau l'un a coté de l'autre-->
-		<table class="table">
-			<thead>
-				<tr>
-					<th>
-						Date du frais
-					</th>
-					<th>
-						type frais
-					</th>
-					<th>
-						nombre
-					</th>
-					<th>
-						montant total
-					</th>
-					<th>
-						Etat
-					</th>
-					<th>
-						Supprimer frais
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let frai of fiche.fraisForfait">
-					<td>
-						{{ frai.date_consommation | date:'dd/MM/yyyy'}}
-					</td>
-					<td>
-						{{ frai.type.libelle }}
-					</td>
-					<td>
-						{{ frai.quantite }}
-					</td>
-					<td>
-						{{ frai.type.montant_unitaire * frai.quantite }}
-					</td>
-					<td>
-						{{ frai.etat }}
-					</td>
-					<td>
-						<button class="btn btn-warning" (click)="deleteFrais(fiche._id ,frai._id)">Supprimer le frai</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<h3>
-			Frais hors forfait
-		</h3>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>
-						Date du frais
-					</th>
-					<th>
-						Libelle
-					</th>
-					<th>
-						nombre
-					</th>
-					<th>
-						montant Unitaire
-					</th>
-					<th>
-						montant Total
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let frai of fiche.fraisHorsForfait">
-					<td>
-						{{ frai.date_consommation | date:'dd/MM/yyyy'}}
-					</td>
-					<td>
-						{{ frai.type.libelle }}
-					</td>
-					<td>
-						{{ frai.quantite }}
-					</td>
-					<td>
-						{{ frai.type.montant_unitaire}}
-					</td>
-					<td>
-						{{ frai.type.montant_unitaire * frai.quantite }}
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="col-md-6">
+			<h3>
+				Frais forfait
+			</h3>
+			<!-- TODO mettre les deux tableau l'un a coté de l'autre-->
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							Date du frai
+						</th>
+						<th>
+							Type de frai
+						</th>
+						<th>
+							Nombre
+						</th>
+						<th>
+							Montant total
+						</th>
+						<th>
+							Etat
+						</th>
+						<th>
+							Supprimer
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let frai of fiche.fraisForfait">
+						<td>
+							{{ frai.date_consommation | date:'dd/MM/yyyy'}}
+						</td>
+						<td>
+							{{ frai.type.libelle }}
+						</td>
+						<td>
+							{{ frai.quantite }}
+						</td>
+						<td>
+							{{ frai.type.montant_unitaire * frai.quantite }}
+						</td>
+						<td>
+							{{ frai.etat }}
+						</td>
+						<td style="text-align: center;">
+							<button class="btn btn-warning" (click)="deleteFrais(fiche._id ,frai._id)">&times;</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-6">
+			<h3>
+				Frais hors forfait
+			</h3>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							Date du frai
+						</th>
+						<th>
+							Nom
+						</th>
+						<th>
+							Nombre
+						</th>
+						<th>
+							Montant unitaire
+						</th>
+						<th>
+							Montant Total
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let frai of fiche.fraisHorsForfait">
+						<td>
+							{{ frai.date_consommation | date:'dd/MM/yyyy'}}
+						</td>
+						<td>
+							{{ frai.type.libelle }}
+						</td>
+						<td>
+							{{ frai.quantite }}
+						</td>
+						<td>
+							{{ frai.type.montant_unitaire}}
+						</td>
+						<td>
+							{{ frai.type.montant_unitaire * frai.quantite }}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>

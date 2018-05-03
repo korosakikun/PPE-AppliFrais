@@ -2,12 +2,12 @@
     <h2>Connexion</h2>
     <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !Login.valid }">
-            <label for="Login">Login</label>
+            <label for="Login">Identifiant</label>
             <input type="text" class="form-control" name="Login" [(ngModel)]="model.Login" #Login="ngModel" required />
-            <div *ngIf="f.submitted && !Login.valid" class="help-block">Le login est requis</div>
+            <div *ngIf="f.submitted && !Login.valid" class="help-block">L'identifiant est requis</div>
         </div>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-            <label for="password">Password</label>
+            <label for="password">Mot de passe</label>
             <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
             <div *ngIf="f.submitted && !password.valid" class="help-block">Le mot de passe est requis</div>
         </div>

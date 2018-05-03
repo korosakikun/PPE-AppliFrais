@@ -8,15 +8,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" [routerLink]="['/'+currentUser?.typeUtilisateur+'/']">GSB</a>
+      <a class="navbar-brand" [routerLink]="['/'+currentUser?.type+'/']">GSB</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul *ngIf="currentUser?.Nom && currentUser?.type === 'visiteur'" class="nav navbar-nav">
         <li><a [routerLink]="['/visiteur']">Fiches</a></li>
-        <li><a [routerLink]="['/visiteur/fraisForfait']">Nouveau frais forfait</a></li>
-        <li><a [routerLink]="['/visiteur/fraisHorsForfait']">Nouveau frais hors forfait</a></li>
+        <li><a [routerLink]="['/visiteur/fraisForfait']">Nouveau frai forfait</a></li>
+        <li><a [routerLink]="['/visiteur/fraisHorsForfait']">Nouveau frai hors forfait</a></li>
         <li><a [routerLink]="['/login']" >Déconnexion</a></li>
       </ul>
       <ul *ngIf="currentUser?.Nom && currentUser?.type === 'comptable'" class="nav navbar-nav">
@@ -24,8 +24,8 @@
         <li><a [routerLink]="['/login']" >Déconnexion</a></li>
       </ul>
       <ul *ngIf="currentUser?.Nom && currentUser?.type === 'admin'" class="nav navbar-nav">
-        <li><a [routerLink]="['/admin/createUser']">Crée utilisateur</a></li>
-        <li><a [routerLink]="['/admin']">Liste utilisateur</a></li>
+        <li><a [routerLink]="['/admin/createUser']">Créer utilisateur</a></li>
+        <li><a [routerLink]="['/admin']">Liste utilisateurs</a></li>
         <li><a [routerLink]="['/login']" >Déconnexion</a></li>
       </ul>
       <p class="navbar-text navbar-right" *ngIf="currentUser?.Nom">

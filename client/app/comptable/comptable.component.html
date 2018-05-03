@@ -1,6 +1,4 @@
 <div class="col-md-6 center-block">
-    <h1>Hi {{currentUser.firstName}}!</h1>
-		<p><a [routerLink]="['/login']">Logout</a></p>
     <h2>
       Non encore traité
     </h2>
@@ -12,10 +10,10 @@
               Date
             </th>
 						<th>
-							type frais
+							Type frai
 						</th>
 						<th>
-							nombre
+							Nombre
 						</th>
 						<th>
 							montant total
@@ -27,7 +25,7 @@
               Valider
             </th>
             <th>
-              Refusée
+              Refuser
             </th>
 					</tr>
 				</thead>
@@ -50,13 +48,13 @@
   							{{ frai.etat }}
   						</td>
               <td>
-  							<button class="btn btn-success" (click)="changerEtatFrais(fiche._id, frai._id, 'valider')">
-                  Valider le frais
+  							<button class="btn btn-success" (click)="changerEtatFrais(fiche._id, frai._id, 'validé')">
+                  &#10003;
                 </button>
   						</td>
               <td>
-                <button class="btn btn-warning" (click)="changerEtatFrais(fiche._id, frai._id, 'refuser')">
-                  Refuser le frais
+                <button class="btn btn-warning" (click)="changerEtatFrais(fiche._id, frai._id, 'refusé')">
+                  &times;
                 </button>
   						</td>
   					</tr>
@@ -79,13 +77,13 @@
   							{{ frai.etat }}
   						</td>
               <td>
-  							<button class="btn btn-success" (click)="changerEtatFraisHorsForfait(fiche._id, frai._id, 'valider')">
-                  Valider le frais
+  							<button class="btn btn-success" (click)="changerEtatFraisHorsForfait(fiche._id, frai._id, 'validé')">
+                  &#10003;
                 </button>
   						</td>
               <td>
-                <button class="btn btn-warning" (click)="changerEtatFraisHorsForfait(fiche._id, frai._id, 'refuser')">
-                  Refuser le frais
+                <button class="btn btn-warning" (click)="changerEtatFraisHorsForfait(fiche._id, frai._id, 'refusé')">
+                  &times;
                 </button>
   						</td>
   					</tr>
@@ -119,7 +117,7 @@
               Valider
             </th>
             <th>
-              Refusée
+              Refuser
             </th>
 					</tr>
 				</thead>
@@ -141,13 +139,13 @@
 							{{ frai.etat }}
 						</td>
             <td>
-							<button class="btn btn-success" (click)="changerEtatFrais(fiche._id, frai._id, 'valider')">
-                Valider le frais
+							<button class="btn btn-success" (click)="changerEtatFrais(fiche._id, frai._id, 'validé')">
+                &#10003;
               </button>
 						</td>
             <td>
-              <button class="btn btn-warning" (click)="changerEtatFrais(fiche._id, frai._id, 'refuser')">
-                Refuser le frais
+              <button class="btn btn-warning" (click)="changerEtatFrais(fiche._id, frai._id, 'refusé')">
+                &times;
               </button>
 						</td>
 					</tr>
@@ -168,13 +166,13 @@
 							{{ frai.etat }}
 						</td>
             <td>
-							<button class="btn btn-success" (click)="changerEtatFraisHorsForfait(fiche._id, frai._id, 'valider')">
-                Valider le frais
+							<button class="btn btn-success" (click)="changerEtatFraisHorsForfait(fiche._id, frai._id, 'validé')">
+                &#10003;
               </button>
 						</td>
             <td>
-              <button class="btn btn-warning" (click)="changerEtatFraisHorsForfait(fiche._id, frai._id, 'refuser')">
-                Refuser le frais
+              <button class="btn btn-warning" (click)="changerEtatFraisHorsForfait(fiche._id, frai._id, 'refusé')">
+                &times;
               </button>
 						</td>
 					</tr>
