@@ -195,12 +195,15 @@ function changeStateFraisHorsForfait(fiche, frai, etat) {
 
 function ajoutFrais(userParam) {
   var deferred = Q.defer();
+  var date = moment().subtract(9, 'd');
+  var dateBegin = date.startOf('month').add(10, 'd').toDate()
+  var dateEnd = date.endOf('month').add(10, 'd').toDate()
   // ajoute un frais sur le mois en cours
   ficheDeFraisModel.update({
       user: userParam._id,
       dateCreation: {
-        "$gte":moment().startOf('month').add(10, 'd').toDate(),
-        "$lt": moment().endOf('month').add(10, 'd').toDate()
+        "$gte": dateBegin,
+        "$lt": dateEnd
       }
     }, {
       $push: {
@@ -218,12 +221,15 @@ function ajoutFrais(userParam) {
 
 function ajoutFraisHorsForfait(userParam) {
   var deferred = Q.defer();
+  var date = moment().subtract(9, 'd');
+  var dateBegin = date.startOf('month').add(10, 'd').toDate()
+  var dateEnd = date.endOf('month').add(10, 'd').toDate()
   //ajoute un frais hors forfait sur le mois en cours
   ficheDeFraisModel.update({
       user: userParam._id,
       dateCreation: {
-        "$gte":moment().startOf('month').add(10, 'd').toDate(),
-        "$lt": moment().endOf('month').add(10, 'd').toDate()
+        "$gte": dateBegin,
+        "$lt": dateEnd
       }
     }, {
       $push: {
