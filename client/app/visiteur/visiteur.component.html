@@ -13,6 +13,9 @@
 			<thead>
 				<tr>
 					<th>
+						Date du frais
+					</th>
+					<th>
 						type frais
 					</th>
 					<th>
@@ -31,6 +34,9 @@
 			</thead>
 			<tbody>
 				<tr *ngFor="let frai of fiche.fraisForfait">
+					<td>
+						{{ frai.date_consommation | date:'dd/MM/yyyy'}}
+					</td>
 					<td>
 						{{ frai.type.libelle }}
 					</td>
@@ -56,6 +62,9 @@
 			<thead>
 				<tr>
 					<th>
+						Date du frais
+					</th>
+					<th>
 						Libelle
 					</th>
 					<th>
@@ -71,6 +80,9 @@
 			</thead>
 			<tbody>
 				<tr *ngFor="let frai of fiche.fraisHorsForfait">
+					<td>
+						{{ frai.date_consommation | date:'dd/MM/yyyy'}}
+					</td>
 					<td>
 						{{ frai.type.libelle }}
 					</td>

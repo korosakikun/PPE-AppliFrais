@@ -11,6 +11,7 @@ import { ficheService, AlertService, UserService } from '../_services/index';
 export class ComptableComponent {
   currentUser: User;
   ficheDeFrais: any;
+  ficheDeFraisNonTraite: any;
   constructor(
     private ficheService: ficheService,
     private alertService: AlertService,
@@ -18,12 +19,22 @@ export class ComptableComponent {
   ) {
     this.currentUser = this.userService.user;
     this.getAllFiches();
+    this.getAllNonTraite();
   }
   //on récupere les fiche de tout les visiteur
   getAllFiches() {
     this.ficheService.getAll().subscribe(
       data => {
         this.ficheDeFrais = data;
+      }
+    )
+  }
+
+  getAllNonTraite() {
+    this.ficheService.getAllNonTraite().subscribe(
+      data => {
+        console.log(data);
+        this.ficheDeFraisNonTraite = data;
       }
     )
   }
@@ -40,6 +51,18 @@ export class ComptableComponent {
   changerEtatFrais(ficheId: string, fraisId: string, etat: string) {
     this.ficheService.changeStateFrais(ficheId, fraisId, etat).subscribe( data => {
       this.alertService.success("Etat du frais changer", true);
+      this.getAllFiches();
+      this.getAllNonTraite();
+    }, error => {
+      this.alertService.error(error);
+    })
+  }
+
+  changerEtatFraisHorsForfait(ficheId: string, fraisId: string, etat: string) {
+    this.ficheService.changeStateFraisHorsForfait(ficheId, fraisId, etat).subscribe( data => {
+      this.alertService.success("Etat du frais changer", true);
+      this.getAllFiches();
+      this.getAllNonTraite();
     }, error => {
       this.alertService.error(error);
     })

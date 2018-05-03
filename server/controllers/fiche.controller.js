@@ -6,8 +6,10 @@ var ficheService = require('services/fiche.service');
 // liste des routes du controlleur fiche, ces routes sont appelée du coté client et renvoi vers une fonction
 router.post('/create', create);
 router.post('/getAll', getAll);
+router.post('/getAllNonTraite', getAllNonTraite);
 router.post('/getAllForUser', getAllForUser);
 router.put('/ajoutFrais', ajoutFrais);
+router.put('/horsForfait/:_id/:_idFrai', changeStateFraisHorsForfait);
 router.put('/:_id/:_idFrai', changeStateFrais);
 router.put('/ajoutFraisHorsForfait', ajoutFraisHorsForfait);
 router.delete('/:_id/:_idFrai', _delete);
@@ -27,6 +29,17 @@ function create(req, res) {
 function changeStateFrais(req, res) {
   // on récupére dans la route les paramettre id et idFrai
   ficheService.changeStateFrais(req.params._id, req.params._idFrai, req.body.etat)
+    .then(function() {
+      res.sendStatus(200);
+    })
+    .catch(function(err) {
+      res.status(400).send(err);
+    });
+}
+
+function changeStateFraisHorsForfait(req, res) {
+  // on récupére dans la route les paramettre id et idFrai
+  ficheService.changeStateFraisHorsForfait(req.params._id, req.params._idFrai, req.body.etat)
     .then(function() {
       res.sendStatus(200);
     })
@@ -69,6 +82,16 @@ function getAll(req, res) {
   ficheService.getAll()
     .then(function(users) {
       res.send(users);
+    })
+    .catch(function(err) {
+      res.status(400).send(err);
+    });
+}
+
+function getAllNonTraite(req, res) {
+  ficheService.getAllNonTraite()
+    .then(function(ficheNonTraite) {
+      res.send(ficheNonTraite);
     })
     .catch(function(err) {
       res.status(400).send(err);

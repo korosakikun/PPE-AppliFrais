@@ -1,13 +1,108 @@
 <div class="col-md-6 center-block">
     <h1>Hi {{currentUser.firstName}}!</h1>
 		<p><a [routerLink]="['/login']">Logout</a></p>
+    <h2>
+      Non encore traité
+    </h2>
+    <div *ngFor="let fiche of ficheDeFraisNonTraite">
+			<table class="table">
+				<thead>
+					<tr>
+            <th>
+              Date
+            </th>
+						<th>
+							type frais
+						</th>
+						<th>
+							nombre
+						</th>
+						<th>
+							montant total
+						</th>
+            <th>
+							Etat
+						</th>
+            <th>
+              Valider
+            </th>
+            <th>
+              Refusée
+            </th>
+					</tr>
+				</thead>
+				<tbody>
+          <ng-template ngFor let-frai [ngForOf]="fiche.fraisForfait">
+  					<tr *ngIf="frai.etat==='Creer'">
+              <td>
+                {{ frai.date_consommation | date:"dd/MM/yyyy" }}
+              </td>
+  						<td>
+  							Forfait : {{ frai.type.libelle }}
+  						</td>
+  						<td>
+  							{{ frai.quantite }}
+  						</td>
+  						<td>
+  							{{ frai.type.montant_unitaire * frai.quantite }}
+  						</td>
+              <td>
+  							{{ frai.etat }}
+  						</td>
+              <td>
+  							<button class="btn btn-success" (click)="changerEtatFrais(fiche._id, frai._id, 'valider')">
+                  Valider le frais
+                </button>
+  						</td>
+              <td>
+                <button class="btn btn-warning" (click)="changerEtatFrais(fiche._id, frai._id, 'refuser')">
+                  Refuser le frais
+                </button>
+  						</td>
+  					</tr>
+          </ng-template>
+          <ng-template ngFor let-frai [ngForOf]="fiche.fraisHorsForfait">
+  					<tr *ngIf="frai.etat==='Creer'">
+              <td>
+                {{ frai.date_consommation | date:"dd/MM/yyyy" }}
+              </td>
+  						<td>
+  							Hors forfait :{{ frai.type.libelle }}
+  						</td>
+  						<td>
+  							{{ frai.quantite }}
+  						</td>
+  						<td>
+  							{{ frai.type.montant_unitaire * frai.quantite }}
+  						</td>
+              <td>
+  							{{ frai.etat }}
+  						</td>
+              <td>
+  							<button class="btn btn-success" (click)="changerEtatFraisHorsForfait(fiche._id, frai._id, 'valider')">
+                  Valider le frais
+                </button>
+  						</td>
+              <td>
+                <button class="btn btn-warning" (click)="changerEtatFraisHorsForfait(fiche._id, frai._id, 'refuser')">
+                  Refuser le frais
+                </button>
+  						</td>
+  					</tr>
+          </ng-template>
+				</tbody>
+			</table>
+		</div>
 		<div class="" *ngFor="let fiche of ficheDeFrais">
 			<h2>
-				{{ fiche.user.Nom }}
+				{{ fiche.user.Nom }} {{ fiche.mois}}
 			</h2>
 			<table class="table">
 				<thead>
 					<tr>
+            <th>
+							Date
+						</th>
 						<th>
 							type frais
 						</th>
@@ -30,8 +125,11 @@
 				</thead>
 				<tbody>
 					<tr *ngFor="let frai of fiche.fraisForfait">
+            <td>
+              {{ frai.date_consommation | date:"dd/MM/yyyy" }}
+            </td>
 						<td>
-							{{ frai.type.libelle }}
+							Forfait : {{ frai.type.libelle }}
 						</td>
 						<td>
 							{{ frai.quantite }}
@@ -49,6 +147,33 @@
 						</td>
             <td>
               <button class="btn btn-warning" (click)="changerEtatFrais(fiche._id, frai._id, 'refuser')">
+                Refuser le frais
+              </button>
+						</td>
+					</tr>
+          <tr *ngFor="let frai of fiche.fraisHorsForfait">
+            <td>
+              {{ frai.date_consommation | date:"dd/MM/yyyy" }}
+            </td>
+						<td>
+							Hors forfait : {{ frai.type.libelle }}
+						</td>
+						<td>
+							{{ frai.quantite }}
+						</td>
+						<td>
+							{{ frai.type.montant_unitaire * frai.quantite }}
+						</td>
+            <td>
+							{{ frai.etat }}
+						</td>
+            <td>
+							<button class="btn btn-success" (click)="changerEtatFraisHorsForfait(fiche._id, frai._id, 'valider')">
+                Valider le frais
+              </button>
+						</td>
+            <td>
+              <button class="btn btn-warning" (click)="changerEtatFraisHorsForfait(fiche._id, frai._id, 'refuser')">
                 Refuser le frais
               </button>
 						</td>

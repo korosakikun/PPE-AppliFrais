@@ -19,6 +19,12 @@
             <input type="number" class="form-control" name="montant_unitaire" (change)="changeTotal()" [(ngModel)]="model.type.montant_unitaire" #montant_unitaire="ngModel" required/>
             <div *ngIf="f.submitted && !montant_unitaire.valid" class="help-block"></div>
         </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !date.valid }">
+            <label for="date">Date</label>
+            <input type="date" class="form-control" name="date" [(ngModel)]="model.date_consommation" #date="ngModel" required/>
+            <div *ngIf="f.submitted && !date.valid" class="help-block"></div>
+        </div>
         <!-- Affiche la valeur calculée en fonction des informations saisie précédemment -->
         <div class="form-group">
           <label for="montantTotal">Montant total</label>

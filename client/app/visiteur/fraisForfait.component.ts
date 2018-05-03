@@ -13,18 +13,7 @@ export class fraisForfaitComponent {
   currentUser: User;
   ficheDeFrais: any;
   //Type de frais possible, rajouter ici si on veux des nouveaux frais forfait
-  types: any = [
-    {
-      nom: "restaurant",
-      montant: 40
-    }, {
-      nom: "hotel",
-      montant: 60
-    }, {
-      nom: 'mixte',
-      montant: 100
-    }
-  ];
+  types: any = [];
   montantTotal: number = 0;
   model: any = {};
   constructor(
@@ -43,6 +32,9 @@ export class fraisForfaitComponent {
       }, {
         libelle: 'mixte',
         montant_unitaire: 100
+      }, {
+        libelle: 'kilométrique',
+        montant_unitaire: 0.5
       }
     ]
   }

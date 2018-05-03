@@ -22,7 +22,9 @@ service.getAllForUser = getAllForUser;
 service.ajoutFrais = ajoutFrais;
 service.ajoutFraisHorsForfait = ajoutFraisHorsForfait;
 service.getAll = getAll;
+service.getAllNonTraite = getAllNonTraite;
 service.changeStateFrais = changeStateFrais;
+service.changeStateFraisHorsForfait = changeStateFraisHorsForfait;
 service.delete = _delete;
 
 module.exports = service;
@@ -30,17 +32,21 @@ module.exports = service;
 function createFiche(_id) {
   var deferred = Q.defer();
   //on verifie si une fiche existe déja pour le mois en cours
+  var date = moment().subtract(9, 'd');
+  var dateBegin = date.startOf('month').add(10, 'd').toDate()
+  var dateEnd = date.endOf('month').add(10, 'd').toDate()
   ficheDeFraisModel.findOne({
     user: _id,
     dateCreation: {
-      "$gte": moment().startOf('month').add(10, 'd').toDate(),
-      "$lt": moment().endOf('month').add(10, 'd').toDate()
+      "$gte": dateBegin,
+      "$lt": dateEnd
     }
   }, function(err, fiche) {
     if (err) {
       deferred.reject(err.name + ": " + err.message);
     }
     //si c'est le cas on ne fait rien
+    console.log(fiche);
     if (fiche) {
       deferred.resolve();
     } else {
@@ -116,7 +122,27 @@ function getAll() {
     if (err) {
       deferred.reject(err.name + ': ' + err.message);
     }
-    console.log(ficheDeFrais);
+    deferred.resolve(ficheDeFrais);
+  });
+
+  return deferred.promise;
+}
+
+function getAllNonTraite() {
+  console.log("getAllNonTraite")
+  var deferred = Q.defer();
+  //on récupere toute les fiche de frais trier par visiteurs et on rajoute les informations sur les visiteurs
+  ficheDeFraisModel.find({
+    $or : [
+      { 'fraisForfait.etat': 'Creer'},
+      { 'fraisHorsForfait.etat':'Creer'}
+    ]
+  },
+  {fraisForfait: 1, fraisHorsForfait: 1, user: 1}
+  ).populate("user").exec(function(err, ficheDeFrais) {
+    if (err) {
+      deferred.reject(err.name + ': ' + err.message);
+    }
     deferred.resolve(ficheDeFrais);
   });
 
@@ -124,6 +150,7 @@ function getAll() {
 }
 
 function changeStateFrais(fiche, frai, etat) {
+  console.log("test2")
   var deferred = Q.defer();
   //on update le frais specifier avec un nouveau etat
   ficheDeFraisModel.update(
@@ -133,6 +160,28 @@ function changeStateFrais(fiche, frai, etat) {
     {
       "$set": {
         "fraisForfait.$.etat": etat
+      }
+    },
+    function(err) {
+      if (err) {
+        deferred.reject(err.name + ': ', err.message)
+      };
+      deferred.resolve();
+    });
+  return deferred.promise;
+}
+
+function changeStateFraisHorsForfait(fiche, frai, etat) {
+  var deferred = Q.defer();
+  console.log("test")
+  //on update le frais specifier avec un nouveau etat
+  ficheDeFraisModel.update(
+    {
+      _id: fiche, "fraisHorsForfait._id" : frai
+    },
+    {
+      "$set": {
+        "fraisHorsForfait.$.etat": etat
       }
     },
     function(err) {

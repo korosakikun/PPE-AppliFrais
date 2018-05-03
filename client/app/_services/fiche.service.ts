@@ -22,6 +22,11 @@ export class ficheService {
     var param = { etat }
     return this.http.put('/ficheDeFrais/' + ficheId + '/' + fraiId, param);
   }
+  changeStateFraisHorsForfait(ficheId: string, fraiId: string, etat: string) {
+    var param = { etat }
+    console.log("test");
+    return this.http.put('/ficheDeFrais/horsForfait/' + ficheId + '/' + fraiId, param);
+  }
 
   //récupere toutes les fiche de frais du visiteur passer en parametre
   getAllForUser(_id: any) {
@@ -31,6 +36,10 @@ export class ficheService {
   //recuperer toute les fiche de chaque visiteur trier dans l'ordre des visiteur
   getAll(){
     return this.http.post('/ficheDeFrais/getAll', '').map((response: Response) => response.json());
+  }
+
+  getAllNonTraite(){
+    return this.http.post('/ficheDeFrais/getAllNonTraite', '').map((response: Response) => response.json());
   }
 
   deleteFrais(_id: string, _idFrai: string) {
