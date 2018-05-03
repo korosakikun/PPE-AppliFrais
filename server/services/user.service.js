@@ -170,7 +170,7 @@ function _delete(Login) {
   var deferred = Q.defer();
 
   userModel.remove({
-      Login: Login
+      _id: Login
     },
     function(err) {
       if (err) deferred.reject(err.name + ': ' + err.message);

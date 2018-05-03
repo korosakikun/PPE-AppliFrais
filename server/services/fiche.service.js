@@ -46,7 +46,6 @@ function createFiche(_id) {
       deferred.reject(err.name + ": " + err.message);
     }
     //si c'est le cas on ne fait rien
-    console.log(fiche);
     if (fiche) {
       deferred.resolve();
     } else {
@@ -129,7 +128,6 @@ function getAll() {
 }
 
 function getAllNonTraite() {
-  console.log("getAllNonTraite")
   var deferred = Q.defer();
   //on récupere toute les fiche de frais trier par visiteurs et on rajoute les informations sur les visiteurs
   ficheDeFraisModel.find({
@@ -150,7 +148,6 @@ function getAllNonTraite() {
 }
 
 function changeStateFrais(fiche, frai, etat) {
-  console.log("test2")
   var deferred = Q.defer();
   //on update le frais specifier avec un nouveau etat
   ficheDeFraisModel.update(
@@ -173,7 +170,6 @@ function changeStateFrais(fiche, frai, etat) {
 
 function changeStateFraisHorsForfait(fiche, frai, etat) {
   var deferred = Q.defer();
-  console.log("test")
   //on update le frais specifier avec un nouveau etat
   ficheDeFraisModel.update(
     {
