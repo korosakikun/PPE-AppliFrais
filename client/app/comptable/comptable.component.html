@@ -93,8 +93,11 @@
 		</div>
 		<div class="" *ngFor="let fiche of ficheDeFrais">
 			<h2>
-				{{ fiche.user.Nom }} {{ fiche.mois}}
+				{{ fiche.user.Nom }} {{ fiche.mois}} - {{fiche.annee}} - {{fiche.etat}}
 			</h2>
+      <button [disabled]="fiche.etat !== 'cloturée'" class="btn btn-success" (click)="changerEtatFiches(fiche._id, 'mise en paiement')">
+        &#10003;
+      </button>
 			<table class="table">
 				<thead>
 					<tr>

@@ -1,9 +1,9 @@
-<div class="row">
-	<div class="" *ngFor="let fiche of ficheDeFrais">
+<div class="">
+	<div class="row" *ngFor="let fiche of ficheDeFrais">
 		<!-- On affiche pour chaque mois la fiche de frais liée ainsi que ces frais forfait et hors forfait
 		dans 2 tableau différent-->
 		<h2>
-			{{ fiche.mois | uppercase}} {{fiche.annee}}
+			{{ fiche.mois | uppercase}} {{fiche.annee}} - {{fiche.etat}}
 		</h2>
 		<div class="col-md-6">
 			<h3>
@@ -51,7 +51,7 @@
 							{{ frai.etat }}
 						</td>
 						<td style="text-align: center;">
-							<button class="btn btn-warning" (click)="deleteFrais(fiche._id ,frai._id)">&times;</button>
+							<button class="btn btn-warning" [disabled]="frai.etat === 'Creer'" (click)="deleteFrais(fiche._id ,frai._id)">&times;</button>
 						</td>
 					</tr>
 				</tbody>
@@ -79,6 +79,12 @@
 						<th>
 							Montant Total
 						</th>
+						<th>
+							Etat
+						</th>
+						<th>
+							Supprimer
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -97,6 +103,12 @@
 						</td>
 						<td>
 							{{ frai.type.montant_unitaire * frai.quantite }}
+						</td>
+						<td>
+							{{ frai.etat }}
+						</td>
+						<td style="text-align: center;">
+							<button class="btn btn-warning" [disabled]="frai.etat === 'Creer'" (click)="deleteFraisHorsForfait(fiche._id ,frai._id)">&times;</button>
 						</td>
 					</tr>
 				</tbody>

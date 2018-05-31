@@ -24,8 +24,10 @@ service.ajoutFraisHorsForfait = ajoutFraisHorsForfait;
 service.getAll = getAll;
 service.getAllNonTraite = getAllNonTraite;
 service.changeStateFrais = changeStateFrais;
+service.changeStateFiches = changeStateFiches;
 service.changeStateFraisHorsForfait = changeStateFraisHorsForfait;
 service.delete = _delete;
+service.deleteHorsForfait = _deleteHorsForfait;
 
 module.exports = service;
 
@@ -251,6 +253,28 @@ function _delete(fiche, frai) {
     {
       $pull : {
         "fraisForfait": {
+          "_id": frai
+        }
+      }
+    }, function(err) {
+      if (err) deferred.reject(err.name + ': ' + err.message);
+
+      deferred.resolve();
+    });
+
+  return deferred.promise;
+}
+
+function _deleteHorsForfait(fiche, frai) {
+  var deferred = Q.defer();
+
+  ficheDeFraisModel.update({
+      _id: fiche,
+      "fraisHorsForfait._id" : frai
+    },
+    {
+      $pull : {
+        "fraisHorsForfait": {
           "_id": frai
         }
       }

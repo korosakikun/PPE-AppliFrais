@@ -51,6 +51,10 @@ export class VisiteurComponent {
     this.ficheService.deleteFrais(_id, _idFrai).subscribe(() => { this.ficheCreate() });
   }
 
+  deleteFraisHorsForfait(_id: string, _idFrai: string) {
+    this.ficheService.deleteFraisHorsForfait(_id, _idFrai).subscribe(() => { this.ficheCreate() });
+  }
+
 
 
 }

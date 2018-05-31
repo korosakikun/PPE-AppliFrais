@@ -39,13 +39,15 @@ export class ComptableComponent {
     )
   }
 
-  // changerEtatFiches(ficheId: string, etat: string) {
-  //   this.ficheService.changeStateFiches(ficheId, etat).subscribe( data => {
-  //     console.log("réussi")
-  //   }, error => {
-  //     this.alertService.error(error);
-  //   })
-  // }
+  changerEtatFiches(ficheId: string, etat: string) {
+    this.ficheService.changeStateFiches(ficheId, etat).subscribe( data => {
+      console.log("réussi")
+      this.getAllFiches();
+      this.getAllNonTraite();
+    }, error => {
+      this.alertService.error(error);
+    })
+  }
 
   // on change l'état d'un frais pour le passer a valider ou refuser
   changerEtatFrais(ficheId: string, fraisId: string, etat: string) {

@@ -22,6 +22,12 @@ export class ficheService {
     var param = { etat }
     return this.http.put('/ficheDeFrais/' + ficheId + '/' + fraiId, param);
   }
+
+  changeStateFiches(ficheId: string, etat: string) {
+    var param = { etat }
+    return this.http.put('/ficheDeFrais/ficheEtat/' + ficheId, param);
+  }
+
   changeStateFraisHorsForfait(ficheId: string, fraiId: string, etat: string) {
     var param = { etat }
     console.log("test");
@@ -44,6 +50,10 @@ export class ficheService {
 
   deleteFrais(_id: string, _idFrai: string) {
     return this.http.delete('/ficheDeFrais/' + _id + '/' + _idFrai);
+  }
+
+  deleteFraisHorsForfait(_id: string, _idFrai: string) {
+    return this.http.delete('/ficheDeFrais/horsForfait/' + _id + '/' + _idFrai);
   }
 
   //Ajoute un frais forfait à une fiche spécifier
